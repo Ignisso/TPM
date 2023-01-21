@@ -2,7 +2,7 @@
 - [X] Stworzenie bazy kodu z opublikowanych prezentacji
 - [X] Utworzenie repozytorium
 - [X] Opracowanie planu pracy
-- [ ] Zaimplementowanie klas mapujących kolumny z bazy danych
+- [X] Zaimplementowanie klas mapujących kolumny z bazy danych
 - [ ] Utworzenie analogicznych klas typu CRUD odpowiedzialnych za operację na bazie danyc
 - [ ] Zdefiniowanie niezbędnych plików HTML
 - [ ] Implementacja plików HTML:
