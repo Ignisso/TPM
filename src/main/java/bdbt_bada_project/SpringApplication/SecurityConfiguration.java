@@ -1,4 +1,5 @@
 package bdbt_bada_project.SpringApplication;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -7,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -21,13 +23,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .password("admin")
                 .roles("ADMIN");
     }
+
     @Bean
-    public PasswordEncoder getPasswordEncoder() { return NoOpPasswordEncoder.getInstance();
+    public PasswordEncoder getPasswordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-
             .antMatchers("/", "/index").permitAll()
             .antMatchers("/resources/static/**").permitAll()
             .antMatchers("/main").authenticated()
