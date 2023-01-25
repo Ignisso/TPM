@@ -6,7 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -16,17 +16,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("user")
-                .password("user")
+                .password("$2a$12$EMmMwnH9WSWQQjd3aWcsgefJva.iSciPwVScAQm2MsT8B9UGJNig.") // "user"
                 .roles("USER")
                 .and()
                 .withUser("admin")
-                .password("admin")
+                .password("$2a$12$37DUQhRa8bQB8mr9rXSgE.wKKrRKcNRJP2byuRbfctAUCK28.9Oju") // "admin"
                 .roles("ADMIN");
     }
 
     @Bean
-    public PasswordEncoder getPasswordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(12);
     }
 
     @Override
