@@ -14,14 +14,13 @@ public class DatabseController {
     private Connection establishConnection() {
         final String User     = "root";
         final String Password = "";
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(getURL(), User, Password);
+        try (Connection connection = DriverManager.getConnection(getURL(), User, Password)) {
+            return connection;
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
             ex.printStackTrace();
         }
-        return connection;
+        return null;
     }
 
     public DatabseController() {
@@ -33,19 +32,38 @@ public class DatabseController {
         }
     }
 
-    public void select(String query) throws SQLException {
+    public ResultSet select(String query) {
         Connection connection = establishConnection();
-        if (connection == null) {
-            return;
+        if (connection == null)
+            return null;
+        try (Statement stat = connection.createStatement()) {
+            try (ResultSet result = stat.executeQuery(query)) {
+                connection.close();
+                return result;
+            } catch (Exception ex) {
+                ex.getMessage();
+                ex.printStackTrace();
+                return null;
+            }
+        } catch (Exception ex) {
+            ex.getMessage();
+            ex.printStackTrace();
+            return null;
         }
+    }
 
-        Statement stat = connection.createStatement();
-        ResultSet result = stat.executeQuery(query);
-        while(result.next()){
-            System.out.print("ID: " + result.getString(1));
-            System.out.print(", First: " + result.getString(2));
-            System.out.println(", Last: " + result.getString(3));
+    public int execute(String sql) {
+        Connection connection = establishConnection();
+        if (connection == null)
+            return -1;
+        try (Statement stat = connection.createStatement()) {
+            int result = stat.executeUpdate(sql);
+            connection.close();
+            return result;
+        } catch (Exception ex) {
+            ex.getMessage();
+            ex.printStackTrace();
+            return -1;
         }
-        connection.close();
     }
 }

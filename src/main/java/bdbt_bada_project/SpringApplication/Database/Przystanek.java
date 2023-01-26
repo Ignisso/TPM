@@ -6,8 +6,8 @@ public class Przystanek {
     private int nr_przedsiebiorstwa;
 
     public Przystanek(int nr_przystanku, String nazwa, int nr_przedsiebiorstwa) {
-        this.nr_przystanku = nr_przystanku;
-        this.nazwa = nazwa;
+        this.nr_przystanku       = nr_przystanku;
+        this.nazwa               = nazwa;
         this.nr_przedsiebiorstwa = nr_przedsiebiorstwa;
     }
 

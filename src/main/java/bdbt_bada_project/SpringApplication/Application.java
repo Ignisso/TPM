@@ -7,13 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Application {
 	public static void main(String[] args) {
 		DatabseController db = new DatabseController();
-		String q = "select * from tab;";
-		try {
-			db.select(q);
-		} catch (Exception ex) {
-			System.err.println(ex.getMessage());
-			ex.printStackTrace();
-		}
-		SpringApplication.run(Application.class, args);
+		//SpringApplication.run(Application.class, args);
 	}
 }

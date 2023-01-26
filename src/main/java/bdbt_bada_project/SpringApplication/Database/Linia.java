@@ -6,8 +6,8 @@ public class Linia {
     private boolean czy_zawieszona;
 
     public Linia(int nr_linii, int linia, char czy_zawieszona) {
-        this.nr_linii = nr_linii;
-        this.linia = linia;
+        this.nr_linii       = nr_linii;
+        this.linia          = linia;
         this.czy_zawieszona = (czy_zawieszona == 'T');
     }
 

@@ -6,9 +6,9 @@ public class Rozklad {
     private int nr_linii;
 
     public Rozklad(int nr_rozkladu, String godzina_odjazdu, int nr_linii) {
-        this.nr_rozkladu = nr_rozkladu;
+        this.nr_rozkladu     = nr_rozkladu;
         this.godzina_odjazdu = godzina_odjazdu;
-        this.nr_linii = nr_linii;
+        this.nr_linii        = nr_linii;
     }
 
     public int getNr_rozkladu() {

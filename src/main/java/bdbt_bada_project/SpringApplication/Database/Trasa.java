@@ -8,10 +8,10 @@ public class Trasa {
     private int nr_przystanku;
 
     public Trasa(int nr_trasy, int koljenosc, int czas, int nr_linii, int nr_przystanku) {
-        this.nr_trasy = nr_trasy;
-        this.koljenosc = koljenosc;
-        this.czas = czas;
-        this.nr_linii = nr_linii;
+        this.nr_trasy      = nr_trasy;
+        this.koljenosc     = koljenosc;
+        this.czas          = czas;
+        this.nr_linii      = nr_linii;
         this.nr_przystanku = nr_przystanku;
     }
 
