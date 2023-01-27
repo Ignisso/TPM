@@ -5,38 +5,28 @@
 	<link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Zaloguj się</title>
+	<title>Strona Główna</title>
 </head>
 <body>
 	<nav class="div-navbar" style="background-color: #141e26; padding: 15px">
-		<ul>
+	  	<ul>
 			<img th:src="@{/img/logo.png}" alt="Logo" class="img-fluid" width="64px">
-			<li><strong>Tramwajowe Przedsiębiorstwo Miejskie</strong></li>
-		</ul>
-		<ul>
-			<li><a th:href="@{/index}"><u>Strona Główna</u></a></li>
-			<li> | </li>
-			<li><a th:href="@{/line}">Rozkłady jazdy</a></li>
-			<li>  </li>
+	    	<li><strong>Tramwajowe Przedsiębiorstwo Miejskie</strong></li>
+	  	</ul>
+	  	<ul>
+	    	<li><a th:href="@{/index}"><u>Strona Główna</u></a></li>
+	    	<li> | </li>
+	    	<li><a th:href="@{/line}">Rozkłady jazdy</a></li>
+	    	<li>  </li>
 			<li><a sec:authorize="isAnonymous()" th:href="@{/login}" role="button">Zaloguj się</a></li>
 			<li><a sec:authorize="isAuthenticated()" th:href="@{/main}" role="button">Witaj, <b>[[${#httpServletRequest.remoteUser}]]</b></a></li>
 			<li><a sec:authorize="isAuthenticated()" th:href="@{/logout}" role="button">Wyloguj się</a></li>
-		</ul>
+	  	</ul>
 	</nav>
-	<div class="page-content" style="padding: 30%;padding-top: 2.5%;">
-		<form method="post" th:action="@{/login}">
-			<label for="login">Nazwa użytkownika</label>
-	      
-	      	<input type="text" id="login" name="username" placeholder="Wpisz nazwę użytkownika">
-		    
-
-		  	<label for="password">Hasło</label>
-		  	<input type="password" id="password" name="password" placeholder="Wpisz swoje hasło">
-		  	<small th:if="${param.error}"}>BŁĄD: Złe hasło bądź nazwa użytkownika </small>
-		  <button type="submit">Zaloguj się</button>
-
-		</form>		
+	<div class="page-content" style="padding: 20px">
+		<div class="article-header" style="text-align: center;vertical-align: center;padding:20px">
+			<span style="font-size: 22pt; color: white"><b>Zostałeś(-aś) pomyślnie wylogowany(-a)</b></span>
+		</div>
 	</div>
-
 </body>
 </html>

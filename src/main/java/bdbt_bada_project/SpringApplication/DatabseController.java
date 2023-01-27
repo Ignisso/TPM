@@ -4,16 +4,16 @@ import java.sql.*;
 
 public class DatabseController {
     private String getURL() {
-        final String Host     = "localhost";
+        final String Host     = "192.168.0.87";
         final String Port     = "3306";
-        final String Database = "test";
+        final String Database = "tpm";
         final String Prefix   = "jdbc:mysql://";
         return Prefix + Host + ":" + Port + "/" + Database;
     }
 
     private Connection establishConnection() {
-        final String User     = "root";
-        final String Password = "";
+        final String User     = "ignisso";
+        final String Password = "fire";
         try (Connection connection = DriverManager.getConnection(getURL(), User, Password)) {
             return connection;
         } catch (Exception ex) {

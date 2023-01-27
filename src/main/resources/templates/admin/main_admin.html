@@ -1,71 +1,107 @@
-<!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Main Admin Page</title>
-
-    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
-
-</head>
-<body>
-
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-    <div class="container">
-        <a class="navbar-brand" href="/">BDBT Spring Boot Project - Part II</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/index}">Home</a>
-                </li>
-
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Main
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" th:inline="text" style="color:lightskyblue;">You are logged in as <b
-                            style="text-transform:capitalize">[[${#httpServletRequest.remoteUser}]]</b></a>
-                </li>
-
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <!--link rel="stylesheet" type="text/css" href="debug.css"/-->
+        <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Witaj [[${#httpServletRequest.remoteUser}]]</title>
+    </head>
+    <body>
+        <nav class="div-navbar" style="background-color: #141e26; padding: 15px">
+            <ul>
+                <img th:src="@{/img/logo.png}" alt="Logo" class="img-fluid" width="64px">
+                <li><strong>Tramwajowe Przedsiębiorstwo Miejskie</strong></li>
             </ul>
+            <ul>
+                <li><a th:href="@{/index}"><u>Strona Główna</u></a></li>
+                <li> | </li>
+                <li><a th:href="@{/line}">Rozkłady jazdy</a></li>
+                <li>  </li>
+                <li><a sec:authorize="isAnonymous()" th:href="@{/login}" role="button">Zaloguj się</a></li>
+                <li><a sec:authorize="isAuthenticated()" th:href="@{/main}" role="button">Witaj, <b>[[${#httpServletRequest.remoteUser}]]</b></a></li>
+                <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}" role="button">Wyloguj się</a></li>
+            </ul>
+        </nav>
+        <div class="page-content">
+            <div class="admin-header" style="display:flex; justify-content: space-between; padding: 20px; padding-left: 60px">
+                    <span style="font-size: 26pt; color: white"><b>Konsola administratora</b></span>
+                    <div>
+                        <span style="font-size: 26pt; color: white; padding-right: 30px ;"><b> Aktualna tabela:</b></span>
+                    <details role="list" style="float:right;padding-right: 30px">
+                        <summary aria-haspopup="listbox">Bilety</summary>
+                        <ul role="listbox">
+                            <li><a>Bilety</a></li>
+                            <li><a>Przystanki</a></li>
+                            <li><a>Trasy</a></li>
+                        </ul>
+                    </details>
+                    </div>
+                    
+            </div>
+            <hr style="width: 98%; margin-left: auto; margin-right: auto;">
+            <div class="tickets-header" style="padding: 20px;">
+                <table>
+                        <th>
+                            <td><b>Numer biletu</b></td>
+                            <td><b>Data skasowania</b></td>
+                            <td><b>Numer pasażera</b></td>
+                            <td><b>Numer rodzaju biletu</b></td>
+                            <td><b>Edytuj</b></td>
+                            <td><b>Usuń</b></td>
+                        </th>
+                        <tr>
+                            <td></td>
+                            <td>1</td>
+                            <td>2022-01-01 13:30</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td><a href="#" role="button">Edytuj</a></td>
+                            <td><a href="#" role="button">Usuń</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>2</td>
+                            <td>2022-02-01 18:30</td>
+                            <td>3</td>
+                            <td>1</td>
+                            <td><a href="#" role="button">Edytuj</a></td>
+                            <td><a href="#" role="button">Usuń</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>3</td>
+                            <td>2022-03-01 17:30</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td><a href="#" role="button">Edytuj</a></td>
+                            <td><a href="#" role="button">Usuń</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>4</td>
+                            <td>2022-04-01 11:30</td>
+                            <td>4</td>
+                            <td>1</td>
+                            <td><a href="#" role="button">Edytuj</a></td>
+                            <td><a href="#" role="button">Usuń</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>5</td>
+                            <td>2022-05-01 14:30</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td><a href="#" role="button">Edytuj</a></td>
+                            <td><a href="#" role="button">Usuń</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><a href="#" role="button">Dodaj</a></td>
+                        </tr>
+                        </table>
+
+            </div>
         </div>
-    </div>
-</nav>
-
-<div class="container">
-    <div class="row">
-
-        <div class="col-md-10 mt-5">
-            <form method="post" th:action="@{/index}">
-                <div class="form-group">
-                    <label style="font-size:30px" th:inline="text">Welcome <a
-                            style="color:lightskyblue; text-transform:capitalize"><b>[[${#httpServletRequest.remoteUser}]]</b></a>
-                        to the main page!</label>
-                    <div style="font-size:20px">If you want to logout, click "Logout" button under this text.</div>
-                </div>
-
-                <button class="btn btn-primary" type="submit" onclick="successfullyLogout()" value="Sign Out">Logout
-                </button>
-            </form>
-        </div>
-
-    </div>
-</div>
-
-
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/script.js}"></script>
-
-</body>
+    </body>
 </html>

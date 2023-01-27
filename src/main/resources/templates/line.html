@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <!--link rel="stylesheet" type="text/css" href="debug.css"/-->
+        <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Linia nr {33} </title>
+    </head>
+    <body>
+    <nav class="div-navbar" style="background-color: #141e26; padding: 15px">
+        <ul>
+            <img th:src="@{/img/logo.png}" alt="Logo" class="img-fluid" width="64px">
+            <li><strong>Tramwajowe Przedsiębiorstwo Miejskie</strong></li>
+        </ul>
+        <ul>
+            <li><a th:href="@{/index}"><u>Strona Główna</u></a></li>
+            <li> | </li>
+            <li><a th:href="@{/line}">Rozkłady jazdy</a></li>
+            <li>  </li>
+            <li><a sec:authorize="isAnonymous()" th:href="@{/login}" role="button">Zaloguj się</a></li>
+            <li><a sec:authorize="isAuthenticated()" th:href="@{/main}" role="button">Witaj, <b>[[${#httpServletRequest.remoteUser}]]</b></a></li>
+            <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}" role="button">Wyloguj się</a></li>
+        </ul>
+    </nav>
+        <div class="page-content">
+            <div class="line-numbers" style="display:flex; justify-content: space-between; padding: 30px">
+                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="outline">1</a>
+                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">3</a>
+                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">6</a>
+                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">9</a>
+                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">13</a>
+                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">17</a>
+                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">22</a>
+                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">24</a>
+                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">26</a>
+                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">28</a>
+                <a href="#" style="width: 64px; height: 62.5px;" role="button">33</a>
+                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="outline">35</a>
+                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">78</a>
+            </div>
+            <hr style="width: 95%; margin-left: auto; margin-right: auto;">
+            <div class="two-columns" style="display: flex; padding: 10px;justify-content: space-between;">
+                <div class="tram-stops">
+                    <div class="direction-header" style="display: flex;align-content:center; padding: 10px">
+                        <div class="direction-header-text" style="display: flex; padding: 10px">
+                            <span style="font-size: 24pt; color: white"><b>Anielewicza → Nowolipki</b></span>
+                        </div>
+                        <div class="direction-header-button" style="padding: 10px; display: flex">
+                            <a role="button"  style="display: block; margin: auto" href="#">
+                            Odwróć
+                            </a>
+                        </div>
+                    </div>
+                    <div class="direction-table">
+                    	<table>
+                		<tr>
+                            <td>Rondo Radosława 01</td>
+                            <td>1 min</td>
+                        </tr>
+                		<tr>
+                            <td>Stawki 03</td>
+                            <td>3 min</td>
+                        </tr>
+                        <tr>
+                            <td>Anielewicza 02</td>
+                            <td>5 min</td>
+                        </tr>
+                        <tr>
+                            <td>Nowolipki 03</td>
+                            <td>6 min</td>
+                        </tr>
+                        <tr>
+                            <td>Nowolipki 03</td>
+                            <td>9 min</td>
+                        </tr>
+                    	</table>
+                    </div>
+                    
+                </div>
+                <div class="tram-schedule" style="padding: 10px">
+                    <div class="schedule-header" style="display: flex;align-content:center; padding: 10px">
+                            <span style="font-size: 24pt; color: white"><b>Rozkład jazdy</b></span>
+                    </div>
+                    <div class="schedule-table">
+                    	<table>
+                        <tr>
+                            <td>05 </td>
+                            <td>15</td>
+                            <td>30</td>
+                            <td>45</td>
+                        </tr>
+                        <tr>
+                            <td>06 </td>
+                            <td>20</td>
+                            <td>40</td>
+                            <td></td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td>07 </td>
+                            <td>30</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    </div>
+                    
+                </div>
+                <!--div class="tram-schedule" style="padding: 20px; float:right; width: 37.5%">
+                    <span style="font-size: 24pt; color: white"><b>Rozkład jazdy</b></span>
+                    
+                </div-->
+            </div>
+        </div>
+    </body>
+</html>

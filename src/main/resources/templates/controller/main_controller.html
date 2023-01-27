@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <!--link rel="stylesheet" type="text/css" href="debug.css"/-->
+        <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Witaj [[${#httpServletRequest.remoteUser}]]</title>
+    </head>
+    <body>
+        <nav class="div-navbar" style="background-color: #141e26; padding: 15px">
+            <ul>
+                <img th:src="@{/img/logo.png}" alt="Logo" class="img-fluid" width="64px">
+                <li><strong>Tramwajowe Przedsiębiorstwo Miejskie</strong></li>
+            </ul>
+            <ul>
+                <li><a th:href="@{/index}"><u>Strona Główna</u></a></li>
+                <li> | </li>
+                <li><a th:href="@{/line}">Rozkłady jazdy</a></li>
+                <li>  </li>
+                <li><a sec:authorize="isAnonymous()" th:href="@{/login}" role="button">Zaloguj się</a></li>
+                <li><a sec:authorize="isAuthenticated()" th:href="@{/main}" role="button">Witaj, <b>[[${#httpServletRequest.remoteUser}]]</b></a></li>
+                <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}" role="button">Wyloguj się</a></li>
+            </ul>
+        </nav>
+        <div class="page-content" style="padding: 50px">
+            <div class="admin-header" style="padding: 20px; padding-bottom: 60px">
+                <span style="font-size: 26pt; color: white;"><b>Wystaw mandat</b></span>
+            <hr style="width: 95%; margin-left: auto; margin-right: auto;">
+            <form>
+             <div style="display:flex; justify-content: start;">
+                <div>
+                     <label for="nr_pasazera">Numer pasażera</label>
+              <input type="number" id="nr_pasazera" name="nr_pasazera" placeholder="Wpisz numer pasazera" required>
+                </div>
+                
+              <div style="padding-left: 100px;">
+                     <label for="kwota">Kwota</label>
+              <input type="number" id="kwota" min="0.01" step="any" name="kwota" placeholder="0.00" required>
+                </div>
+             </div>
+              
+
+
+              <label for="powod">Powód mandatu</label>
+              <input type="text" id="powod" name="powod" placeholder="Podaj powod" required>
+            <label for="oplacone" style="padding-bottom: 10px">
+            <input type="checkbox" id="oplacone" name="oplacone">
+            Opłacono u kontrolera
+            </label>
+              <button type="submit">Wystaw</button>
+
+            </form>
+        </div>
+    </body>
+</html>

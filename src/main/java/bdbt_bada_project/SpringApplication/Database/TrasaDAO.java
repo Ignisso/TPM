@@ -26,6 +26,7 @@ public class TrasaDAO {
             ex.printStackTrace();
             return null;
         }
+        return null;
     }
 
     public void insert(Trasa trasa) {

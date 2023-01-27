@@ -21,7 +21,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .withUser("admin")
                 .password("$2a$12$37DUQhRa8bQB8mr9rXSgE.wKKrRKcNRJP2byuRbfctAUCK28.9Oju") // "admin"
-                .roles("ADMIN");
+                .roles("ADMIN")
+                .and()
+                .withUser("controller")
+                .password("$2a$12$huI4HuhQG3XbsdTZTr.5le3YHbCTLXCwCiDynS8vYSRckeweAicLO") // "controller"
+                .roles("CONTROLLER");
     }
 
     @Bean
@@ -37,6 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/main").authenticated()
             .antMatchers("/main_admin").access("hasRole('ADMIN')")
             .antMatchers("/main_user").access("hasRole('USER')")
+            .antMatchers("/main_controller").access("hasRole('CONTROLLER')")
             .and()
             .formLogin()
             .loginPage("/login")
@@ -44,8 +49,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .permitAll()
             .and()
             .logout()
-            .logoutUrl("/index")
+            .logoutUrl("/logout")
             .logoutSuccessUrl("/index")
+            .invalidateHttpSession(true)
+            .deleteCookies("JSESSIONID")
             .permitAll();
     }
 }
