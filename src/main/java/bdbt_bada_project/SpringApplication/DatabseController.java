@@ -51,7 +51,9 @@ public class DatabseController {
             return -1;
         try {
             Statement stat = active.createStatement();
-            return stat.executeUpdate(sql);
+            int r = stat.executeUpdate(sql);
+            active.commit();
+            return r;
         } catch (Exception ex) {
             ex.printStackTrace();
             return -1;

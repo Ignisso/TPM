@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.servlet.http.HttpServletRequest;
 
 @Configuration
-public class AppController implements WebMvcConfigurer {
+public class SpringController implements WebMvcConfigurer {
     @RequestMapping("/")
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/index").setViewName("index");
