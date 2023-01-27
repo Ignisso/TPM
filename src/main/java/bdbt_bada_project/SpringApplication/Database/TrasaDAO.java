@@ -16,7 +16,7 @@ public class TrasaDAO {
     public List<Trasa> select(int nr_trasy) {
         String sql = "SELECT * FROM trasy WHERE nr_trasy = " + nr_trasy;
         try {
-        ResultSet rs = dbcon.select(sql);
+            ResultSet rs = dbcon.select(sql);
             List<Trasa> result = new ArrayList<>();
             while (rs.next()) {
                 Trasa t = new Trasa(
@@ -33,7 +33,6 @@ public class TrasaDAO {
             ex.printStackTrace();
             return null;
         }
-        return null;
     }
 
     public void insert(Trasa trasa) {

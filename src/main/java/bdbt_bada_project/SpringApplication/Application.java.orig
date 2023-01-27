@@ -1,0 +1,15 @@
+package bdbt_bada_project.SpringApplication;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Application {
+	public static void main(String[] args) {
+<<<<<<< HEAD
+		DatabseController db = new DatabseController();
+=======
+>>>>>>> d879b1de4a1fb7e46c426efe0661c6b351a36671
+		SpringApplication.run(Application.class, args);
+	}
+}
