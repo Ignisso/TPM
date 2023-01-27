@@ -3,6 +3,7 @@ package bdbt_bada_project.SpringApplication;
 import java.sql.*;
 
 public class DatabseController {
+    Connection active = null;
     private String getURL() {
         final String Host     = "192.168.0.87";
         final String Port     = "3306";
@@ -20,7 +21,6 @@ public class DatabseController {
             System.err.println(ex.getMessage());
             ex.printStackTrace();
         }
-        return null;
     }
 
     public DatabseController() {
@@ -33,37 +33,27 @@ public class DatabseController {
     }
 
     public ResultSet select(String query) {
-        Connection connection = establishConnection();
-        if (connection == null)
             return null;
-        try (Statement stat = connection.createStatement()) {
-            try (ResultSet result = stat.executeQuery(query)) {
-                connection.close();
-                return result;
-            } catch (Exception ex) {
-                ex.getMessage();
-                ex.printStackTrace();
-                return null;
-            }
         } catch (Exception ex) {
-            ex.getMessage();
             ex.printStackTrace();
             return null;
         }
     }
 
     public int execute(String sql) {
-        Connection connection = establishConnection();
-        if (connection == null)
             return -1;
-        try (Statement stat = connection.createStatement()) {
-            int result = stat.executeUpdate(sql);
-            connection.close();
-            return result;
         } catch (Exception ex) {
-            ex.getMessage();
             ex.printStackTrace();
             return -1;
+        }
+    }
+
+    public void closeConnection() {
+        try {
+            if (active != null)
+               active.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }

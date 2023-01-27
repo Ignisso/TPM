@@ -3,6 +3,7 @@ package bdbt_bada_project.SpringApplication.Database;
 import bdbt_bada_project.SpringApplication.DatabseController;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrasaDAO {
@@ -12,17 +13,23 @@ public class TrasaDAO {
         dbcon = new DatabseController();
     }
 
-    public Trasa select(int nr_trasy) {
-        String sql = "SELECT * FROM test WHERE id = " + Integer.toString(nr_trasy) + ";";
-        ResultSet rs = dbcon.select(sql);
+    public List<Trasa> select(int nr_trasy) {
+        String sql = "SELECT * FROM trasy WHERE nr_trasy = " + nr_trasy;
         try {
-            if (rs.next()) {
-
+        ResultSet rs = dbcon.select(sql);
+            List<Trasa> result = new ArrayList<>();
+            while (rs.next()) {
+                Trasa t = new Trasa(
+                        rs.getInt("nr_trasy"),
+                        rs.getInt("kolejnosc"),
+                        rs.getInt("czas"),
+                        rs.getInt("nr_linii"),
+                        rs.getInt("nr_przystanku"));
+                result.add(t);
             }
-            else
-                return null;
+            dbcon.closeConnection();
+            return result;
         } catch (Exception ex) {
-            ex.getMessage();
             ex.printStackTrace();
             return null;
         }
