@@ -3,24 +3,24 @@ package bdbt_bada_project.SpringApplication;
 import java.sql.*;
 
 public class DatabseController {
+    Connection active = null;
     private String getURL() {
         final String Host     = "localhost";
         final String Port     = "3306";
-        final String Database = "test";
+        final String Database = "tpm";
         final String Prefix   = "jdbc:mysql://";
         return Prefix + Host + ":" + Port + "/" + Database;
     }
 
-    private Connection establishConnection() {
+    private void establishConnection() {
         final String User     = "root";
         final String Password = "";
-        try (Connection connection = DriverManager.getConnection(getURL(), User, Password)) {
-            return connection;
+        try {
+            active = DriverManager.getConnection(getURL(), User, Password);
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
             ex.printStackTrace();
         }
-        return null;
     }
 
     public DatabseController() {
@@ -33,37 +33,37 @@ public class DatabseController {
     }
 
     public ResultSet select(String query) {
-        Connection connection = establishConnection();
-        if (connection == null)
+        establishConnection();
+        if (active == null)
             return null;
-        try (Statement stat = connection.createStatement()) {
-            try (ResultSet result = stat.executeQuery(query)) {
-                connection.close();
-                return result;
-            } catch (Exception ex) {
-                ex.getMessage();
-                ex.printStackTrace();
-                return null;
-            }
+        try {
+            Statement stat = active.createStatement();
+            return stat.executeQuery(query);
         } catch (Exception ex) {
-            ex.getMessage();
             ex.printStackTrace();
             return null;
         }
     }
 
     public int execute(String sql) {
-        Connection connection = establishConnection();
-        if (connection == null)
+        establishConnection();
+        if (active == null)
             return -1;
-        try (Statement stat = connection.createStatement()) {
-            int result = stat.executeUpdate(sql);
-            connection.close();
-            return result;
+        try {
+            Statement stat = active.createStatement();
+            return stat.executeUpdate(sql);
         } catch (Exception ex) {
-            ex.getMessage();
             ex.printStackTrace();
             return -1;
+        }
+    }
+
+    public void closeConnection() {
+        try {
+            if (active != null)
+               active.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }
