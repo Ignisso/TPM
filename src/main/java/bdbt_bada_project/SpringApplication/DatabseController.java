@@ -52,7 +52,7 @@ public class DatabseController {
         try {
             Statement stat = active.createStatement();
             int r = stat.executeUpdate(sql);
-            active.commit();
+            //active.commit();
             return r;
         } catch (Exception ex) {
             ex.printStackTrace();
