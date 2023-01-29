@@ -8,6 +8,38 @@
         <title>Witaj [[${#httpServletRequest.remoteUser}]]</title>
     </head>
     <body>
+        <dialog id="modal-example">
+            <article>
+                <h3>Tabela Bilet</h3>
+                <form th:action="@{/update}" method="post">
+                    <div class="grid">
+                        <label for="data_skasowania">
+                            Data skasowania
+                            <input type="date" id="data_skasowania" name="data_skasowania">
+                        </label>
+                        <label for="numer_pasazera">
+                            Numer pasażera
+                            <input type="number" id="numer_pasazera" name="numer_pasazera" placeholder="Numer pasazera" required onblur="checkValidity('numer_pasazera')">
+                        </label>
+                    </div>
+                    <label for="rodzaj_biletu">Rodzaj biletu</label>
+                    <select id="rodzaj_biletu" name="rodzaj_biletu" required onBlur="checkValidity('rodzaj_biletu')">
+                        <option value="" disabled selected hidden> Wybierz rodzaj biletu</option>
+                        <option value="1">Bilet jednorazowy ULGOWY</option>
+                        <option value="2">Bilet jednorazowy NORMALNY</option>
+                        <option value="3">Bilet jednodniowy ULGOWY</option>
+                        <option value="4">Bilet jednodniowy NORMALNY</option>
+                        <option value="5">Bilet miesięczny ULGOWY</option>
+                        <option value="6">Bilet miesięczny NORMALNY</option>
+                    </select>
+                <footer style="float:right">
+
+                    <a th:href="@{#}"role="button" class="secondary" data-target="modal-example" onClick="toggleModal(event)">Anuluj</a>
+                    <button type="submit" role="button" style="width: 110px">Dodaj</button>
+                </footer>
+                </form>
+            </article>
+        </dialog>
         <nav class="div-navbar" style="background-color: #141e26; padding: 15px">
             <ul>
                 <img th:src="@{/img/logo.png}" alt="Logo" class="img-fluid" width="64px">
@@ -18,9 +50,12 @@
                 <li> | </li>
                 <li><a th:href="@{/line}">Rozkłady jazdy</a></li>
                 <li>  </li>
-                <li><a sec:authorize="isAnonymous()" th:href="@{/login}" role="button">Zaloguj się</a></li>
-                <li><a sec:authorize="isAuthenticated()" th:href="@{/main}" role="button">Witaj, <b>[[${#httpServletRequest.remoteUser}]]</b></a></li>
-                <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}" role="button">Wyloguj się</a></li>
+                <li sec:authorize="isAnonymous()"><a  th:href="@{/login}" role="button">Zaloguj się</a></li>
+                <li sec:authorize="isAuthenticated()" ><a th:href="@{/main}" role="button">Witaj, <b>[[${#httpServletRequest.remoteUser}]]</b></a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <form method="POST" th:action="@{/logout}" style="height:20px">
+                        <button role="button" type="submit" value="Sign Out">Wyloguj się</button>
+                    </form>
             </ul>
         </nav>
         <div class="page-content">
@@ -56,8 +91,8 @@
                             <td>2022-01-01 13:30</td>
                             <td>1</td>
                             <td>2</td>
-                            <td><a href="#" role="button">Edytuj</a></td>
-                            <td><a href="#" role="button">Usuń</a></td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
+                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -65,8 +100,8 @@
                             <td>2022-02-01 18:30</td>
                             <td>3</td>
                             <td>1</td>
-                            <td><a href="#" role="button">Edytuj</a></td>
-                            <td><a href="#" role="button">Usuń</a></td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
+                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -74,17 +109,17 @@
                             <td>2022-03-01 17:30</td>
                             <td>1</td>
                             <td>2</td>
-                            <td><a href="#" role="button">Edytuj</a></td>
-                            <td><a href="#" role="button">Usuń</a></td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
+                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
                         </tr>
                         <tr>
                             <td></td>
                             <td>4</td>
-                            <td>2022-04-01 11:30</td>
-                            <td>4</td>
-                            <td>1</td>
-                            <td><a href="#" role="button">Edytuj</a></td>
-                            <td><a href="#" role="button">Usuń</a></td>
+                            <td>2022-03-09 17:50</td>
+                            <td>3</td>
+                            <td>3</td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
+                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -92,16 +127,20 @@
                             <td>2022-05-01 14:30</td>
                             <td>2</td>
                             <td>3</td>
-                            <td><a href="#" role="button">Edytuj</a></td>
-                            <td><a href="#" role="button">Usuń</a></td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
+                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td><a href="#" role="button">Dodaj</a></td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Dodaj</a></td>
                         </tr>
                         </table>
 
             </div>
         </div>
+        <script type="text/javascript" th:src="@{/js/modal.js}"></script>
+        <script type="text/javascript" th:src="@{/js/form.js}"></script>
     </body>
+
+
 </html>

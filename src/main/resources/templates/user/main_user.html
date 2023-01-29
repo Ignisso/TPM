@@ -26,13 +26,13 @@
         <div class="page-content">
             <div class="tickets-header" style="display:flex; justify-content: space-between; padding: 20px">
                     <span style="font-size: 26pt; color: white"><b>Twoje bilety</b></span>
-                    <a href="buy.html" role="button" style="align: right; width: 64px; height: 62.5px;"> + </a>
+                    <a th:href="@{/buy}" role="button" style="align: right; width: 64px; height: 62.5px;"> + </a>
             </div>
             <div class=ticket>
                 <div class="ticket-container" style="display: flex; margin: 10px;">
                     <div class="qr-code">
                         <figure style="display: block; margin: auto; width: 256px;">
-                            <img th:src="@{/img/qr.png}" alt="Kod QR" class="img-fluid">
+                            <img th:src="@{/img/qr1.png}" alt="Kod QR" class="img-fluid">
                         </figure>
                     </div>
                     <div class="ticket-info" style="margin: 15px; width: 100%">
@@ -62,7 +62,7 @@
                 <div class="ticket-container" style="display: flex; margin: 10px;">
                     <div class="qr-code">
                         <figure style="display: block; margin: auto; width: 256px;">
-                            <img th:src="@{/img/qr.png}" alt="Kod QR" class="img-fluid">
+                            <img th:src="@{/img/qr2.png}" alt="Kod QR" class="img-fluid">
                         </figure>
                     </div>
                     <div class="ticket-info" style="margin: 15px; width: 100%">
@@ -93,7 +93,7 @@
                 <div class="ticket-container" style="display: flex; margin: 10px;">
                     <div class="qr-code">
                         <figure style="display: block; margin: auto; width: 256px;">
-                            <img th:src="@{/img/qr.png}" alt="Kod QR" class="img-fluid">
+                            <img th:src="@{/img/qr3.png}" alt="Kod QR" class="img-fluid">
                         </figure>
                     </div>
                     <div class="ticket-info" style="margin: 15px; width: 100%">
