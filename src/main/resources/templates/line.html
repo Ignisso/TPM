@@ -18,9 +18,12 @@
             <li> | </li>
             <li><a th:href="@{/line}">Rozkłady jazdy</a></li>
             <li>  </li>
-            <li><a sec:authorize="isAnonymous()" th:href="@{/login}" role="button">Zaloguj się</a></li>
-            <li><a sec:authorize="isAuthenticated()" th:href="@{/main}" role="button">Witaj, <b>[[${#httpServletRequest.remoteUser}]]</b></a></li>
-            <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}" role="button">Wyloguj się</a></li>
+            <li sec:authorize="isAnonymous()"><a  th:href="@{/login}" role="button">Zaloguj się</a></li>
+            <li sec:authorize="isAuthenticated()" ><a th:href="@{/main}" role="button">Witaj, <b>[[${#httpServletRequest.remoteUser}]]</b></a></li>
+            <li sec:authorize="isAuthenticated()">
+                <form method="POST" th:action="@{/logout}" style="height:20px">
+                    <button role="button" type="submit" value="Sign Out">Wyloguj się</button>
+                </form>
         </ul>
     </nav>
         <div class="page-content">

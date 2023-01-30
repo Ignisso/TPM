@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <!--link rel="stylesheet" type="text/css" href="debug.css"/-->
+        <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Witaj [[${#httpServletRequest.remoteUser}]]</title>
+    </head>
+    <body>
+        <dialog id="modal-example">
+            <article>
+                <h3>Tabela Trasy</h3>
+                <form th:action="@{/update}" method="post">
+                    <div class="grid">
+                        <input type="hidden" name="table" value="trasy">
+                        <label for="kolejnosc">
+                            Kolejnosc
+                            <input type="number" id="kolejnosc" name="kolejnosc" required>
+                        </label>
+                        <label for="czas">
+                            Czas
+                            <input type="number" id="czas" name="czas" required>
+                        </label>
+                    </div>
+                    <div class="grid">
+                        <label for="numer_linii">
+                            Numer linii
+                            <input type="number" id="numer_linii" name="numer_linii" required>
+                        </label>
+                        <label for="numer_przystanku">
+                            Numer przystanku
+                            <input type="number" id="numer_przystanku" name="numer_przystanku" required>
+                        </label>
+                    </div>
+                <footer style="float:right">
+                    <a th:href="@{#}"role="button" class="secondary" data-target="modal-example" onClick="toggleModal(event)">Anuluj</a>
+                    <button type="submit" role="button" style="width: 110px">Dodaj</button>
+                </footer>
+                </form>
+            </article>
+        </dialog>
+        <nav class="div-navbar" style="background-color: #141e26; padding: 15px">
+            <ul>
+                <img th:src="@{/img/logo.png}" alt="Logo" class="img-fluid" width="64px">
+                <li><strong>Tramwajowe Przedsiębiorstwo Miejskie</strong></li>
+            </ul>
+            <ul>
+                <li><a th:href="@{/index}"><u>Strona Główna</u></a></li>
+                <li> | </li>
+                <li><a th:href="@{/line}">Rozkłady jazdy</a></li>
+                <li>  </li>
+                <li sec:authorize="isAnonymous()"><a  th:href="@{/login}" role="button">Zaloguj się</a></li>
+                <li sec:authorize="isAuthenticated()" ><a th:href="@{/main}" role="button">Witaj, <b>[[${#httpServletRequest.remoteUser}]]</b></a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <form method="POST" th:action="@{/logout}" style="height:20px">
+                        <button role="button" type="submit" value="Sign Out">Wyloguj się</button>
+                    </form>
+            </ul>
+        </nav>
+        <div class="page-content">
+            <div class="admin-header" style="display:flex; justify-content: space-between; padding: 20px; padding-left: 60px">
+                    <span style="font-size: 26pt; color: white"><b>Konsola administratora</b></span>
+                    <div>
+                        <span style="font-size: 26pt; color: white; padding-right: 30px ;"><b> Aktualna tabela:</b></span>
+                    <details role="list" style="float:right;padding-right: 30px">
+                        <summary aria-haspopup="listbox">Przystanki</summary>
+                        <ul role="listbox">
+                            <li><a th:href="@{/main_admin/bilety}">Bilety</a></li>
+                            <li><a th:href="@{/main_admin/przystanki}">Przystanki</a></li>
+                            <li><a th:href="@{/main_admin/trasy}">Trasy</a></li>
+                        </ul>
+                    </details>
+                    </div>
+                    
+            </div>
+            <hr style="width: 98%; margin-left: auto; margin-right: auto;">
+            <div class="tickets-header" style="padding: 20px;">
+                <table>
+                        <th>
+                            <td><b>Numer trasy</b></td>
+                            <td><b>Kolejność</b></td>
+                            <td><b>Czas</b></td>
+                            <td><b>Numer linii</b></td>
+                            <td><b>Numer przystanku</b></td>
+                            <td><b>Edytuj</b></td>
+                            <td><b>Usuń</b></td>
+                        </th>
+                        <tr>
+                            <td></td>
+                            <td><b>1</b></td>
+                            <td><b>1</b></td>
+                            <td><b>0</b></td>
+                            <td><b>1</b></td>
+                            <td><b>1</b></td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
+                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><b>2</b></td>
+                            <td><b>2</b></td>
+                            <td><b>3</b></td>
+                            <td><b>1</b></td>
+                            <td><b>2</b></td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
+                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><b>3</b></td>
+                            <td><b>3</b></td>
+                            <td><b>6</b></td>
+                            <td><b>1</b></td>
+                            <td><b>3</b></td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
+                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><b>4</b></td>
+                            <td><b>4</b></td>
+                            <td><b>9</b></td>
+                            <td><b>1</b></td>
+                            <td><b>4</b></td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
+                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><b>5</b></td>
+                            <td><b>5</b></td>
+                            <td><b>13</b></td>
+                            <td><b>1</b></td>
+                            <td><b>5</b></td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
+                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Dodaj</a></td>
+                        </tr>
+                        </table>
+
+            </div>
+        </div>
+        <script type="text/javascript" th:src="@{/js/modal.js}"></script>
+        <script type="text/javascript" th:src="@{/js/main_admin.js}"></script>
+    </body>
+
+
+</html>

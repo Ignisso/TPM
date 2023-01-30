@@ -18,7 +18,9 @@ public class SpringController implements WebMvcConfigurer {
         registry.addViewController("/logout").setViewName("logout");
         registry.addViewController("/line").setViewName("line");
 
-        registry.addViewController("/main_admin").setViewName("admin/main_admin");
+        registry.addViewController("/main_admin/bilety").setViewName("admin/bilety");
+        registry.addViewController("/main_admin/przystanki").setViewName("admin/przystanki");
+        registry.addViewController("/main_admin/trasy").setViewName("admin/trasy");
         registry.addViewController("/main_user").setViewName("user/main_user");
         registry.addViewController("/buy").setViewName("user/buy");
         registry.addViewController("/main_controller").setViewName("controller/main_controller");
@@ -29,7 +31,7 @@ public class SpringController implements WebMvcConfigurer {
         @RequestMapping("/main")
         public String defaultAfterLogin(HttpServletRequest request) {
             if (request.isUserInRole("ADMIN"))
-                return "redirect:/main_admin";
+                return "redirect:/main_admin/bilety";
             else if (request.isUserInRole("USER"))
                 return "redirect:/main_user";
             else if (request.isUserInRole("CONTROLLER"))
