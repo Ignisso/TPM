@@ -1,10 +1,10 @@
 package bdbt_bada_project.SpringApplication.Database;
 
 public class Bilet extends DatabaseObject {
-    public Bilet(Integer index) {
+    public Bilet() {
         super("bilety");
         fieldNames.put(0, "nr_biletu");
-        field.add(index);
+        field.add(0);
         fieldNames.put(1, "data_skasowania");
         field.add(null);
         fieldNames.put(2, "nr_pasazera");

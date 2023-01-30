@@ -1,10 +1,10 @@
 package bdbt_bada_project.SpringApplication.Database;
 
 public class Pracownik extends DatabaseObject {
-    public Pracownik(Integer index) {
+    public Pracownik() {
         super("pracownicy");
         fieldNames.put(0, "nr_pracownika");
-        field.add(index);
+        field.add(0);
         fieldNames.put(1, "imie");
         field.add("");
         fieldNames.put(2, "nazwisko");

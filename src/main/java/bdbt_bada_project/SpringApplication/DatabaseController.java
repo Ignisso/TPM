@@ -2,7 +2,7 @@ package bdbt_bada_project.SpringApplication;
 
 import java.sql.*;
 
-public class DatabseController {
+public class DatabaseController {
     Connection active = null;
     private String getURL() {
         final String Host     = "localhost";
@@ -23,7 +23,7 @@ public class DatabseController {
         }
     }
 
-    public DatabseController() {
+    public DatabaseController() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException ex) {

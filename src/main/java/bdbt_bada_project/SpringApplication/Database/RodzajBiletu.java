@@ -1,10 +1,10 @@
 package bdbt_bada_project.SpringApplication.Database;
 
 public class RodzajBiletu extends DatabaseObject {
-    public RodzajBiletu(Integer index) {
+    public RodzajBiletu() {
         super("rodzaje_biletow");
         fieldNames.put(0, "nr_rodzaju_biletu");
-        field.add(index);
+        field.add(0);
         fieldNames.put(1, "czy_ulgowy");
         field.add('?');
         fieldNames.put(2, "nazwa_biletu");

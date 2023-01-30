@@ -1,10 +1,10 @@
 package bdbt_bada_project.SpringApplication.Database;
 
 public class Mandat extends DatabaseObject {
-    public Mandat(Integer index) {
+    public Mandat() {
         super("mandaty");
         fieldNames.put(0, "nr_mandatu");
-        field.add(index);
+        field.add(0);
         fieldNames.put(1, "kwota");
         field.add(1.f);
         fieldNames.put(2, "data");

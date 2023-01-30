@@ -1,7 +1,10 @@
 package bdbt_bada_project.SpringApplication;
+import bdbt_bada_project.SpringApplication.Database.DAO;
+import bdbt_bada_project.SpringApplication.Database.Przystanek;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -70,4 +73,57 @@ public class SpringController implements WebMvcConfigurer {
         return "user/main_controller";
     }
 
+    /**
+     * 		Integer in_line = 17;
+     * 		Integer forward = 1; // or 0
+     *
+     * 		DatabaseController dc = new DatabaseController();
+     * 		ResultSet rs = dc.select("SELECT DISTINCT(linia) FROM linie");
+     * 		List<Integer> distinct_lines = new ArrayList<>();
+     * 		try {
+     * 			while (rs.next())
+     * 				distinct_lines.add(rs.getInt(1));
+     * 			dc.closeConnection();
+     *                } catch (Exception ex) {
+     * 			ex.printStackTrace();
+     *        }
+     *
+     * 		//if (!distinct_lines.contains(in_line))
+     * 		//	redirect 404
+     *
+     * 		rs = dc.select("SELECT nr_linii FROM linie WHERE linia = " + in_line);
+     * 		List<Integer> direction = new ArrayList<>();
+     * 		try {
+     * 			while (rs.next())
+     * 				direction.add(rs.getInt(1));
+     * 			dc.closeConnection();
+     *        } catch (Exception ex) {
+     * 			ex.printStackTrace();
+     *        }
+     *
+     * 		rs = dc.select("SELECT godzina_odjazdu FROM rozklady WHERE nr_linii = " + direction.get(forward));
+     * 		List<String> departure = new ArrayList<>();
+     * 		try {
+     * 			while (rs.next())
+     * 				departure.add(rs.getString(1));
+     * 			dc.closeConnection();
+     *        } catch (Exception ex) {
+     * 			ex.printStackTrace();
+     *        }
+     *
+     * 		rs = dc.select("SELECT czas, nazwa FROM trasy LEFT JOIN przystanki ON " +
+     * 				"trasy.nr_przystanku = przystanki.nr_przystanku WHERE nr_linii = " + direction.get(forward) +
+     * 				" ORDER BY czas");
+     * 		List<Integer> time = new ArrayList<>();
+     * 		List<String> stops = new ArrayList<>();
+     * 		try {
+     * 			while (rs.next()) {
+     * 				time.add(rs.getInt(1));
+     * 				stops.add(rs.getString(2));
+     *            }
+     * 			dc.closeConnection();
+     *        } catch (Exception ex) {
+     * 			ex.printStackTrace();
+     *        }
+     */
 }
