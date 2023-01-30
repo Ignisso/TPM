@@ -2,16 +2,19 @@
 <html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
 	<!--link rel="stylesheet" type="text/css" href="debug.css"/-->
+	<link rel="stylesheet" type="text/css" href="/css/scrollbar.css"/>
 	<link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Strona Główna</title>
 </head>
 <body>
-<nav class="div-navbar" style="background-color: #141e26; padding: 15px">
+<nav class="div-navbar" style="background-color: #141e26; padding: 15px; height: 120px; width: 100%; position:fixed; top: 0">
 	<ul>
-		<img th:src="@{/img/logo.png}" alt="Logo" class="img-fluid" width="64px">
-		<li><strong>Tramwajowe Przedsiębiorstwo Miejskie</strong></li>
+		<a th:href="@{/index}">
+			<img th:src="@{/img/logo.png}" alt="Logo" class="img-fluid" width="64px">
+			<li style="color:white"><b>Tramwajowe Przedsiębiorstwo Miejskie</b></li>
+		</a>
 	</ul>
 	<ul>
 		<li><a th:href="@{/index}"><u>Strona Główna</u></a></li>
@@ -19,14 +22,17 @@
 		<li><a th:href="@{/line}">Rozkłady jazdy</a></li>
 		<li>  </li>
 		<li sec:authorize="isAnonymous()"><a  th:href="@{/login}" role="button">Zaloguj się</a></li>
-		<li sec:authorize="isAuthenticated()" ><a th:href="@{/main}" role="button">Witaj, <b>[[${#httpServletRequest.remoteUser}]]</b></a></li>
+		<li sec:authorize="hasRole('ADMIN')" ><a th:href="@{/main}" role="button">Panel administratora</b></a></li>
+		<li sec:authorize="hasRole('CONTROLLER')" ><a th:href="@{/main}" role="button">Panel kontrolera</b></a></li>
+		<li sec:authorize="hasRole('USER')" ><a th:href="@{/main}" role="button">Panel pasażera</b></a></li>
 		<li sec:authorize="isAuthenticated()">
 			<form method="POST" th:action="@{/logout}" style="height:20px">
 				<button role="button" type="submit" value="Sign Out">Wyloguj się</button>
 			</form>
+		</li>
 	</ul>
 </nav>
-	<div class="page-content" style="padding: 20px">
+<div class="page-content" style="padding: 20px; margin: 30px; margin-top: 120px">
 		<div class="two-columns" style="display: flex; padding: 10px;justify-content: space-between;">
 			<div class="article-container" style="width: 60%; ">
 				<div class="article-header" style="text-align: center;vertical-align: center;padding:20px"> 
@@ -34,8 +40,7 @@
 				</div>
 				<div class="article-text" style="padding: 20px; align: center"> 
 					<span style="display: inline-block; vertical-align: middle;text-align: justify;">
-						W ostatnich latach Warszawa zaczyna się coraz bardziej rozwijać pod względem komunikacji miejskiej. Jednym z najważniejszych przykładów tego rozwoju jest pojawienie się nowych tramwajów na ulicach miasta. Nowe pojazdy znacznie poprawiły jakość przemieszczania się po mieście, zwiększyły komfort podróży oraz przyczyniły się do zwiększenia bezpieczeństwa na torowiskach. Jednym z najważniejszych atutów nowych tramwajów jest ich nowoczesna konstrukcja. Są one dostosowane do potrzeb osób niepełnosprawnych oraz posiadają nowoczesne systemy informacji pasażerskiej i klimatyzację. Dzięki temu podróżowanie tramwajami stało się bardziej komfortowe, co przyciąga coraz więcej pasażerów. Kolejnym ważnym aspektem jest zwiększenie bezpieczeństwa na torowiskach. Nowe tramwaje posiadają systemy automatycznego hamowania oraz nowoczesne systemy kontroli pojazdu, co znacznie zmniejsza ryzyko wypadków. Przyczynia się to do poprawy bezpieczeństwa zarówno pasażerów, jak i kierowców tramwajów. Nie można również zapominać o korzyściach dla środowiska. Nowe tramwaje są bardziej ekologiczne niż starsze modele, co przyczynia się do zmniejszenia emisji spalin i hałasu na ulicach miasta. Jest to szczególnie ważne w kontekście coraz większego zanieczyszczenia powietrza w dużych miastach. Jednak nowe tramwaje mają także swoje wady. Jednym z głównych problemów jest koszt ich zakupu i utrzymania. Nowe pojazdy są znacznie droższe niż te starsze, co przyczynia się do wzrostu cen biletów. Dodatkowo, koszty...
-						<a href="#"><u> Czytaj dalej</u></a>
+						W ostatnich latach Warszawa zaczyna się coraz bardziej rozwijać pod względem komunikacji miejskiej. Jednym z najważniejszych przykładów tego rozwoju jest pojawienie się nowych tramwajów na ulicach miasta. Nowe pojazdy znacznie poprawiły jakość przemieszczania się po mieście, zwiększyły komfort podróży oraz przyczyniły się do zwiększenia bezpieczeństwa na torowiskach. Jednym z najważniejszych atutów nowych tramwajów jest ich nowoczesna konstrukcja. Są one dostosowane do potrzeb osób niepełnosprawnych oraz posiadają nowoczesne systemy informacji pasażerskiej i klimatyzację. Dzięki temu podróżowanie tramwajami stało się bardziej komfortowe, co przyciąga coraz więcej pasażerów. Kolejnym ważnym aspektem jest zwiększenie bezpieczeństwa na torowiskach. Nowe tramwaje posiadają systemy automatycznego hamowania oraz nowoczesne systemy kontroli pojazdu, co znacznie zmniejsza ryzyko wypadków. Przyczynia się to do poprawy bezpieczeństwa zarówno pasażerów, jak i kierowców tramwajów. Nie można również zapominać o korzyściach dla środowiska. Nowe tramwaje są bardziej ekologiczne niż starsze modele, co przyczynia się do zmniejszenia emisji spalin i hałasu na ulicach miasta. Jest to szczególnie ważne w kontekście coraz większego zanieczyszczenia powietrza w dużych miastach. Jednak nowe tramwaje mają także swoje wady. Jednym z głównych problemów jest koszt ich zakupu i utrzymania. Nowe pojazdy są znacznie droższe niż te starsze, co przyczynia się do wzrostu cen biletów.
 					</span>	
 				</div> 
 			</div>
@@ -58,8 +63,7 @@
 				</div>
 				<div class="article-text" style="padding: 20px; align: center"> 
 					<span style="display: inline-block; vertical-align: middle;text-align: justify;">
-						Stare tramwaje to ważny element historii Warszawy, który niestety powoli zanika z ulic miasta. Choć nowe tramwaje zapewniają lepszą jakość podróży oraz bezpieczeństwo, to jednak stary tramwaj ma swój urok i jest ważnym elementem kultury miasta. Pierwsze tramwaje pojawiły się w Warszawie już w 1866 roku. Od tego czasu stały się one ważnym środkiem transportu miejskiego, który przyczynił się do rozwoju miasta. Tramwaje były nie tylko środkiem transportu, ale także ważnym elementem kultury i codziennego życia mieszkańców Warszawy. Stare tramwaje charakteryzują się swoim unikalnym wyglądem i konstrukcją. Są one zbudowane z drewna i metalu, co nadaje im niepowtarzalnego charakteru i stylistyki. Wiele z tych pojazdów jest ozdobionych malowidłami i grafikami, co przyciąga wzrok i jest ciekawym elementem architektury miasta. Stare tramwaje mają także swoją historię i związek z ważnymi wydarzeniami w Warszawie. Wiele z tych pojazdów brało udział w ważnych momentach historycznych, takich jak Powstanie Warszawskie czy okres PRL-u, co nadaje im dodatkowego znaczenia i wartości. Niestety, stare tramwaje powoli znikają z ulic Warszawy. Wiele z tych pojazdów jest już wycofywanych z eksploatacji ze względu na swój wiek i brak możliwości modernizacji. To jest szkoda, ponieważ stary tramwaj jest ważnym elementem historii i kultury miasta. Aby zachować te cenne skarby, niektóre z tych pojazdów są przechowywane w muzeach lub na turystycznych trasach, dzięki czemu mogą być oglądane przez mieszkańców i turystów. Warto jednak pamięać ...
-						<a href="#"><u> Czytaj dalej</u></a>
+						Stare tramwaje to ważny element historii Warszawy, który niestety powoli zanika z ulic miasta. Choć nowe tramwaje zapewniają lepszą jakość podróży oraz bezpieczeństwo, to jednak stary tramwaj ma swój urok i jest ważnym elementem kultury miasta. Pierwsze tramwaje pojawiły się w Warszawie już w 1866 roku. Od tego czasu stały się one ważnym środkiem transportu miejskiego, który przyczynił się do rozwoju miasta. Tramwaje były nie tylko środkiem transportu, ale także ważnym elementem kultury i codziennego życia mieszkańców Warszawy. Stare tramwaje charakteryzują się swoim unikalnym wyglądem i konstrukcją. Są one zbudowane z drewna i metalu, co nadaje im niepowtarzalnego charakteru i stylistyki. Wiele z tych pojazdów jest ozdobionych malowidłami i grafikami, co przyciąga wzrok i jest ciekawym elementem architektury miasta. Stare tramwaje mają także swoją historię i związek z ważnymi wydarzeniami w Warszawie. Wiele z tych pojazdów brało udział w ważnych momentach historycznych, takich jak Powstanie Warszawskie czy okres PRL-u, co nadaje im dodatkowego znaczenia i wartości. Niestety, stare tramwaje powoli znikają z ulic Warszawy. Wiele z tych pojazdów jest już wycofywanych z eksploatacji ze względu na swój wiek i brak możliwości modernizacji. To jest szkoda, ponieważ stary tramwaj jest ważnym elementem historii i kultury miasta. Aby zachować te cenne skarby, niektóre z tych pojazdów są przechowywane w muzeach lub na turystycznych trasach, dzięki czemu mogą być oglądane przez mieszkańców i turystów.
 					</span>	
 				</div> 
 			</div>

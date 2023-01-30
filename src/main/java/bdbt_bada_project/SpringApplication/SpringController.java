@@ -61,10 +61,6 @@ public class SpringController implements WebMvcConfigurer {
     public String showAdminPage(Model model) {
         return "admin/main_admin";
     }
-    @RequestMapping(value={"/logout"})
-    public String finalizeLogOut(Model model) {
-        return "redirect:/index";
-    }
     @RequestMapping(value={"/main_user"})
     public String showUserPage(Model model) {
         return "user/main_user";

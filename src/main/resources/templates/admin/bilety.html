@@ -2,6 +2,7 @@
 <html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
     <head>
         <!--link rel="stylesheet" type="text/css" href="debug.css"/-->
+        <link rel="stylesheet" type="text/css" href="/css/scrollbar.css"/>
         <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,25 +48,30 @@
                 </form>
             </article>
         </dialog>
-        <nav class="div-navbar" style="background-color: #141e26; padding: 15px">
+        <nav class="div-navbar" style="background-color: #141e26; padding: 15px; height: 120px; width: 100%; position:fixed; top: 0">
             <ul>
-                <img th:src="@{/img/logo.png}" alt="Logo" class="img-fluid" width="64px">
-                <li><strong>Tramwajowe Przedsiębiorstwo Miejskie</strong></li>
+                <a th:href="@{/index}">
+                    <img th:src="@{/img/logo.png}" alt="Logo" class="img-fluid" width="64px">
+                    <li style="color:white"><b>Tramwajowe Przedsiębiorstwo Miejskie</b></li>
+                </a>
             </ul>
             <ul>
-                <li><a th:href="@{/index}"><u>Strona Główna</u></a></li>
+                <li><a th:href="@{/index}">Strona Główna</a></li>
                 <li> | </li>
                 <li><a th:href="@{/line}">Rozkłady jazdy</a></li>
                 <li>  </li>
                 <li sec:authorize="isAnonymous()"><a  th:href="@{/login}" role="button">Zaloguj się</a></li>
-                <li sec:authorize="isAuthenticated()" ><a th:href="@{/main}" role="button">Witaj, <b>[[${#httpServletRequest.remoteUser}]]</b></a></li>
+                <li sec:authorize="hasRole('ADMIN')" ><a th:href="@{/main}" role="button">Witaj, administratorze!</b></a></li>
+                <li sec:authorize="hasRole('CONTROLLER')" ><a th:href="@{/main}" role="button">Witaj, kontrolerze!</b></a></li>
+                <li sec:authorize="hasRole('USER')" ><a th:href="@{/main}" role="button">Witaj, pasażerze!</b></a></li>
                 <li sec:authorize="isAuthenticated()">
                     <form method="POST" th:action="@{/logout}" style="height:20px">
                         <button role="button" type="submit" value="Sign Out">Wyloguj się</button>
                     </form>
+                </li>
             </ul>
         </nav>
-        <div class="page-content">
+        <div class="page-content" style="padding: 20px; margin: 30px; margin-top: 120px">
             <div class="admin-header" style="display:flex; justify-content: space-between; padding: 20px; padding-left: 60px">
                     <span style="font-size: 26pt; color: white"><b>Konsola administratora</b></span>
                     <div>

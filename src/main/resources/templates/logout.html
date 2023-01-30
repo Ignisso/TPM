@@ -2,31 +2,44 @@
 <html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
 	<!--link rel="stylesheet" type="text/css" href="debug.css"/-->
+	<link rel="stylesheet" type="text/css" href="/css/scrollbar.css"/>
 	<link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Strona Główna</title>
 </head>
 <body>
-	<nav class="div-navbar" style="background-color: #141e26; padding: 15px">
-	  	<ul>
+<nav class="div-navbar" style="background-color: #141e26; padding: 15px; height: 120px; width: 100%; position:fixed; top: 0">
+	<ul>
+		<a th:href="@{/index}">
 			<img th:src="@{/img/logo.png}" alt="Logo" class="img-fluid" width="64px">
-	    	<li><strong>Tramwajowe Przedsiębiorstwo Miejskie</strong></li>
-	  	</ul>
-	  	<ul>
-	    	<li><a th:href="@{/index}"><u>Strona Główna</u></a></li>
-	    	<li> | </li>
-	    	<li><a th:href="@{/line}">Rozkłady jazdy</a></li>
-	    	<li>  </li>
-			<li><a sec:authorize="isAnonymous()" th:href="@{/login}" role="button">Zaloguj się</a></li>
-			<li><a sec:authorize="isAuthenticated()" th:href="@{/main}" role="button">Witaj, <b>[[${#httpServletRequest.remoteUser}]]</b></a></li>
-			<li><a sec:authorize="isAuthenticated()" th:href="@{/logout}" role="button">Wyloguj się</a></li>
-	  	</ul>
-	</nav>
-	<div class="page-content" style="padding: 20px">
+			<li style="color:white"><b>Tramwajowe Przedsiębiorstwo Miejskie</b></li>
+		</a>
+	</ul>
+	<ul>
+		<li><a th:href="@{/index}">Strona Główna</a></li>
+		<li> | </li>
+		<li><a th:href="@{/line}">Rozkłady jazdy</a></li>
+		<li>  </li>
+		<li sec:authorize="isAnonymous()"><a  th:href="@{/login}" role="button">Zaloguj się</a></li>
+		<li sec:authorize="hasRole('ADMIN')" ><a th:href="@{/main}" role="button">Panel administratora</b></a></li>
+		<li sec:authorize="hasRole('CONTROLLER')" ><a th:href="@{/main}" role="button">Panel kontrolera</b></a></li>
+		<li sec:authorize="hasRole('USER')" ><a th:href="@{/main}" role="button">Panel pasażera</b></a></li>
+		<li sec:authorize="isAuthenticated()">
+			<form method="POST" th:action="@{/logout}" style="height:20px">
+				<button role="button" type="submit" value="Sign Out">Wyloguj się</button>
+			</form>
+		</li>
+	</ul>
+</nav>
+<div class="page-content" style="padding: 20px; margin: 30px; margin-top: 120px">
 		<div class="article-header" style="text-align: center;vertical-align: center;padding:20px">
 			<span style="font-size: 22pt; color: white"><b>Zostałeś(-aś) pomyślnie wylogowany(-a)</b></span>
-		</div>
+		</div><div class="article-header" style="text-align: center;vertical-align: center;padding:20px">
+		<span style="font-size: 14pt; color: white">Za 5 sekund nastąpi przekierowanie do strony głównej</span>
 	</div>
+	</div>
+<script type="text/javascript" th:src="@{/js/logout.js}"></script>
 </body>
+
 </html>
