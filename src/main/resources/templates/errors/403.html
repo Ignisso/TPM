@@ -18,25 +18,35 @@
         <li> | </li>
         <li><a th:href="@{/line}">Rozkłady jazdy</a></li>
         <li>  </li>
-        <li><a sec:authorize="isAnonymous()" th:href="@{/login}" role="button">Zaloguj się</a></li>
-        <li><a sec:authorize="isAuthenticated()" th:href="@{/main}" role="button">Witaj, <b>[[${#httpServletRequest.remoteUser}]]</b></a></li>
-        <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}" role="button">Wyloguj się</a></li>
+        <li sec:authorize="isAnonymous()"><a  th:href="@{/login}" role="button">Zaloguj się</a></li>
+        <li sec:authorize="isAuthenticated()" ><a th:href="@{/main}" role="button">Witaj, <b>[[${#httpServletRequest.remoteUser}]]</b></a></li>
+        <li sec:authorize="isAuthenticated()">
+            <form method="POST" th:action="@{/logout}" style="height:20px">
+                <button role="button" type="submit" value="Sign Out">Wyloguj się</button>
+            </form>
     </ul>
 </nav>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-4 mt-5">
-            <form method="post" th:action="@{/index}">
-                <div class="form-group">
-                    <div><b><p style="font-size:30px">Error</p></b></div>
-                    <div><p style="font-size:24px">403 - Forbidden page</p></div>
-                </div>
-                <button class="btn btn-primary" type="submit" value="Sign In">Back to home page</button>
-            </form>
+<div class="page-content" style="padding: 20px">
+    <div class="two-columns" style="display: flex; padding: 10px;justify-content: space-between;">
+        <div class="article-container" style="width: 60%; ">
+            <div>
+                <p style="font-size:96px">Error 403 </p>
+            </div>
+            <div>
+                <p style="font-size:48px">Drogi pasażerze, nie masz uprawnień żeby tu przebywać, spróbuj się zalogować ...</p>
+            </div>
+            <div>
+                <a th:href="@{/main}" role="button">Wróc na stronę główną </b></a>
+            </div>
+        </div>
+        <div class="image-container" style="width: 40%; display: flex;">
+            <figure style="display: block; margin: auto; width: 512px;">
+                <img th:src="@{/img/error.jpg}" alt="Error" class="img-fluid">
+            </figure>
         </div>
     </div>
 </div>
+
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>

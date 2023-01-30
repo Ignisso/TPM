@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <!--link rel="stylesheet" type="text/css" href="debug.css"/-->
+        <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Witaj [[${#httpServletRequest.remoteUser}]]</title>
+    </head>
+    <body>
+        <dialog id="modal-example">
+            <article>
+                <h3>Tabela Przystanki</h3>
+                <form th:action="@{/update}" method="post">
+                    <div class="grid">
+                        <input type="hidden" name="table" value="przystanki">
+                        <label for="nazwa_przystanku">
+                            Nazwa przystanku
+                            <input type="text" id="nazwa_przystanku" name="nazwa_przystanku" required>
+                        </label>
+                        <label for="numer_przedsiebiorstwa">
+                            Numer przedsiębiorstwa
+                            <input type="number" id="numer_przedsiebiorstwa" name="numer_przedsiebiorstwa" required>
+                        </label>
+                    </div>
+                <footer style="float:right">
+                    <a th:href="@{#}"role="button" class="secondary" data-target="modal-example" onClick="toggleModal(event)">Anuluj</a>
+                    <button type="submit" role="button" style="width: 110px">Dodaj</button>
+                </footer>
+                </form>
+            </article>
+        </dialog>
+        <nav class="div-navbar" style="background-color: #141e26; padding: 15px">
+            <ul>
+                <img th:src="@{/img/logo.png}" alt="Logo" class="img-fluid" width="64px">
+                <li><strong>Tramwajowe Przedsiębiorstwo Miejskie</strong></li>
+            </ul>
+            <ul>
+                <li><a th:href="@{/index}"><u>Strona Główna</u></a></li>
+                <li> | </li>
+                <li><a th:href="@{/line}">Rozkłady jazdy</a></li>
+                <li>  </li>
+                <li sec:authorize="isAnonymous()"><a  th:href="@{/login}" role="button">Zaloguj się</a></li>
+                <li sec:authorize="isAuthenticated()" ><a th:href="@{/main}" role="button">Witaj, <b>[[${#httpServletRequest.remoteUser}]]</b></a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <form method="POST" th:action="@{/logout}" style="height:20px">
+                        <button role="button" type="submit" value="Sign Out">Wyloguj się</button>
+                    </form>
+            </ul>
+        </nav>
+        <div class="page-content">
+            <div class="admin-header" style="display:flex; justify-content: space-between; padding: 20px; padding-left: 60px">
+                    <span style="font-size: 26pt; color: white"><b>Konsola administratora</b></span>
+                    <div>
+                        <span style="font-size: 26pt; color: white; padding-right: 30px ;"><b> Aktualna tabela:</b></span>
+                    <details role="list" style="float:right;padding-right: 30px">
+                        <summary aria-haspopup="listbox">Przystanki</summary>
+                        <ul role="listbox">
+                            <li><a th:href="@{/main_admin/bilety}">Bilety</a></li>
+                            <li><a th:href="@{/main_admin/przystanki}">Przystanki</a></li>
+                            <li><a th:href="@{/main_admin/trasy}">Trasy</a></li>
+                        </ul>
+                    </details>
+                    </div>
+                    
+            </div>
+            <hr style="width: 98%; margin-left: auto; margin-right: auto;">
+            <div class="tickets-header" style="padding: 20px;">
+                <table>
+                        <th>
+                            <td><b>Numer przystanku</b></td>
+                            <td><b>Nazwa przystanku</b></td>
+                            <td><b>Numer przedsiębiorstwa</b></td>
+                            <td><b>Edytuj</b></td>
+                            <td><b>Usuń</b></td>
+                        </th>
+                        <tr>
+                            <td></td>
+                            <td>1</td>
+                            <td>Okopowa 02</td>
+                            <td>1</td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
+                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>2</td>
+                            <td>Stawki 01</td>
+                            <td>1</td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
+                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>3</td>
+                            <td>Dworzec Centralny 10</td>
+                            <td>1</td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
+                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>4</td>
+                            <td>Plac Starynkiewicza 15</td>
+                            <td>1</td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
+                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>5</td>
+                            <td>Plac Zawiszy 07</td>
+                            <td>1</td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
+                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Dodaj</a></td>
+                        </tr>
+                        </table>
+
+            </div>
+        </div>
+        <script type="text/javascript" th:src="@{/js/modal.js}"></script>
+        <script type="text/javascript" th:src="@{/js/main_admin.js}"></script>
+    </body>
+
+
+</html>

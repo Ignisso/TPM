@@ -8,6 +8,32 @@
         <title>Witaj [[${#httpServletRequest.remoteUser}]]</title>
     </head>
     <body>
+    <dialog id="modal-example">
+        <article>
+            <h3>Tabela Bilet</h3>
+            <form th:action="@{/update}" method="post">
+                <input type="hidden" id="numer_pasazera" name="numer_pasazera" value="1">
+                <label for="rodzaj_biletu">Rodzaj biletu</label>
+                <select id="rodzaj_biletu" name="rodzaj_biletu" required>
+                    <option value="" disabled selected hidden> Wybierz rodzaj biletu</option>
+                    <option value="1">Bilet jednorazowy</option>
+                    <option value="3">Bilet jednodniowy</option>
+                    <option value="5">Bilet miesięczny<option>
+                </select>
+                <select id="czy_ulgowy" name="czy_ulgowy" required>
+                    <option value="0" selected>NORMALNY</option>
+                    <option value="1">ULGOWY</option>
+
+                </select>
+                <footer style="float:right">
+
+                    <a th:href="@{#}"role="button" class="secondary" data-target="modal-example" onClick="toggleModal(event)">Anuluj</a>
+                    <button type="submit" role="button" style="width: 110px">Kup</button>
+                </footer>
+            </form>
+        </article>
+    </dialog>
+
     <nav class="div-navbar" style="background-color: #141e26; padding: 15px">
         <ul>
             <img th:src="@{/img/logo.png}" alt="Logo" class="img-fluid" width="64px">
@@ -18,15 +44,18 @@
             <li> | </li>
             <li><a th:href="@{/line}">Rozkłady jazdy</a></li>
             <li>  </li>
-            <li><a sec:authorize="isAnonymous()" th:href="@{/login}" role="button">Zaloguj się</a></li>
-            <li><a sec:authorize="isAuthenticated()" th:href="@{/main}" role="button">Witaj, <b>[[${#httpServletRequest.remoteUser}]]</b></a></li>
-            <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}" role="button">Wyloguj się</a></li>
+            <li sec:authorize="isAnonymous()"><a  th:href="@{/login}" role="button">Zaloguj się</a></li>
+            <li sec:authorize="isAuthenticated()" ><a th:href="@{/main}" role="button">Witaj, <b>[[${#httpServletRequest.remoteUser}]]</b></a></li>
+            <li sec:authorize="isAuthenticated()">
+                <form method="POST" th:action="@{/logout}" style="height:20px">
+                    <button role="button" type="submit" value="Sign Out">Wyloguj się</button>
+                </form>
         </ul>
     </nav>
         <div class="page-content">
             <div class="tickets-header" style="display:flex; justify-content: space-between; padding: 20px">
                     <span style="font-size: 26pt; color: white"><b>Twoje bilety</b></span>
-                    <a th:href="@{/buy}" role="button" style="align: right; width: 64px; height: 62.5px;"> + </a>
+                    <a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)" style="align: right; width: 64px; height: 62.5px;"> + </a>
             </div>
             <div class=ticket>
                 <div class="ticket-container" style="display: flex; margin: 10px;">
@@ -36,7 +65,7 @@
                         </figure>
                     </div>
                     <div class="ticket-info" style="margin: 15px; width: 100%">
-                        <span style="font-size: 20pt; color: white"><b>RODZAJ:</b> Bilet jednoprzejazdowy</span>
+                        <span style="font-size: 20pt; color: white"><b>RODZAJ: </b>Bilet jednoprzejazdowy</span>
                         <div class="ticket-extra-info" style="display: flex;justify-content: space-between;">
                             <div class="ticket-zones" style="display: flex">
                                 <figure style="display: block; padding-left: 10px; margin: auto; width: 64px;">
@@ -50,8 +79,11 @@
                         </div>
                         </div>
                         
-                        <div class="scan-ticet" style="display: flex; justify-content: center; margin-top: 35px">
-                            <button style="width: 75%;">Skasuj bilet</button>
+                        <div class="scan-ticket" style="display: flex; justify-content: center; margin-top: 35px">
+                            <form method="POST" th:action="@{/scan}" style="height:20px">
+                                <input type="hidden" name="numer_biletu" value="1">
+                                <button role="button" type="submit" style="width: 50vw">Skasuj bilet</button>
+                            </form>
                         </div>
                         
                     </div>
@@ -66,7 +98,7 @@
                         </figure>
                     </div>
                     <div class="ticket-info" style="margin: 15px; width: 100%">
-                        <span style="font-size: 20pt; color: white"><b>RODZAJ:</b> Bilet 24-godzinny</span>
+                        <span style="font-size: 20pt; color: white"><b>RODZAJ: </b>Bilet 24-godzinny</span>
                         <div class="ticket-extra-info" style="display: flex;justify-content: space-between;">
                             <div class="ticket-zones" style="display: flex">
                                 <figure style="display: block; padding-left: 10px; margin: auto; width: 64px;">
@@ -80,9 +112,9 @@
                         </div>
                         
                         <div class="progress-bar" style="text-align: center;">
-                            <span style="font-size: 10pt"><b>Pozostały:</b> 2 godziny 12 minut</span>
+                            <span style="font-size: 10pt"><b>Pozostały:</b>2 godziny 12 minut</span>
                             <progress value="132" max="1440"></progress>
-                            <span style="font-size: 10pt"><b>Data skasowania:</b> 21.01.2022 13:59</span>
+                            <span style="font-size: 10pt"><b>Data skasowania: </b>29.01.2023 10:00:00</span>
                         </div>
                         
                     </div>
@@ -97,7 +129,7 @@
                         </figure>
                     </div>
                     <div class="ticket-info" style="margin: 15px; width: 100%">
-                        <span style="font-size: 20pt; color: white"><b>RODZAJ:</b> Bilet miesięczny</span>
+                        <span style="font-size: 20pt; color: white"><b>RODZAJ: </b>Bilet miesięczny</span>
                         <div class="ticket-extra-info" style="display: flex;justify-content: space-between;">
                             <div class="ticket-zones" style="display: flex">
                                 <figure style="display: block; padding-left: 10px; margin: auto; width: 64px;">
@@ -116,7 +148,7 @@
                         <div class="progress-bar" style="text-align: center;">
                             <span style="font-size: 10pt"><b>Pozostało:</b> 21 dni 3 godziny</span>
                             <progress value="507" max="720"></progress>
-                            <span style="font-size: 10pt"><b>Data skasowania:</b> 21.01.2022 13:59</span>
+                            <span style="font-size: 10pt"><b>Data skasowania: </b>21.01.2023 13:00:00</span>
                         </div>
                         
                     </div>
@@ -124,5 +156,7 @@
             </div>
             <hr style="width: 95%; margin-left: auto; margin-right: auto;">
         </div>
+    <script type="text/javascript" th:src="@{/js/user.js}"></script>
+    <script type="text/javascript" th:src="@{/js/modal.js}"></script>
     </body>
 </html>

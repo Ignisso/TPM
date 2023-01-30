@@ -10,20 +10,27 @@
     <body>
         <dialog id="modal-example">
             <article>
-                <h3>Tabela Bilet</h3>
+                <h3>Tabela Bilety</h3>
                 <form th:action="@{/update}" method="post">
+                    <div class="grid">
+                        <input type="hidden" name="table" value="bilety">
+                        <label for="numer_pasazera">
+                            Numer pasażera
+                            <input type="number" id="numer_pasazera" name="numer_pasazera" placeholder="Numer pasazera" required>
+                        </label>
+                    </div>
                     <div class="grid">
                         <label for="data_skasowania">
                             Data skasowania
                             <input type="date" id="data_skasowania" name="data_skasowania">
                         </label>
-                        <label for="numer_pasazera">
-                            Numer pasażera
-                            <input type="number" id="numer_pasazera" name="numer_pasazera" placeholder="Numer pasazera" required onblur="checkValidity('numer_pasazera')">
+                        <label for="czas_skasowania">
+                            Godzina skasowania
+                            <input type="time" id="czas_skasowania" name="czas_skasowania">
                         </label>
                     </div>
                     <label for="rodzaj_biletu">Rodzaj biletu</label>
-                    <select id="rodzaj_biletu" name="rodzaj_biletu" required onBlur="checkValidity('rodzaj_biletu')">
+                    <select id="rodzaj_biletu" name="rodzaj_biletu" required>
                         <option value="" disabled selected hidden> Wybierz rodzaj biletu</option>
                         <option value="1">Bilet jednorazowy ULGOWY</option>
                         <option value="2">Bilet jednorazowy NORMALNY</option>
@@ -66,9 +73,9 @@
                     <details role="list" style="float:right;padding-right: 30px">
                         <summary aria-haspopup="listbox">Bilety</summary>
                         <ul role="listbox">
-                            <li><a>Bilety</a></li>
-                            <li><a>Przystanki</a></li>
-                            <li><a>Trasy</a></li>
+                            <li><a th:href="@{/main_admin/bilety}">Bilety</a></li>
+                            <li><a th:href="@{/main_admin/przystanki}">Przystanki</a></li>
+                            <li><a th:href="@{/main_admin/trasy}">Trasy</a></li>
                         </ul>
                     </details>
                     </div>
@@ -139,7 +146,7 @@
             </div>
         </div>
         <script type="text/javascript" th:src="@{/js/modal.js}"></script>
-        <script type="text/javascript" th:src="@{/js/form.js}"></script>
+        <script type="text/javascript" th:src="@{/js/main_admin.js}"></script>
     </body>
 
 
