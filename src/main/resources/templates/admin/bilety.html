@@ -2,6 +2,7 @@
 <html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/head :: head">
     <title id="title">Witaj [[${#httpServletRequest.remoteUser}]]</title>
+
     </head>
     <body>
         <dialog id="modal-example">
@@ -9,10 +10,10 @@
                 <h3>Tabela Bilety</h3>
                 <form th:action="@{/update}" method="post">
                     <div class="grid">
-                        <input type="hidden" name="table" value="bilety">
+                        <input type="hidden" name="nazwa_tabeli" value="bilety">
                         <label for="numer_pasazera">
                             Numer pasażera
-                            <input type="number" id="numer_pasazera" name="numer_pasazera" placeholder="Numer pasazera" required>
+                            <input type="number" id="numer_pasazera" name="numer_pasazera" placeholder="Numer pasazera" disabled>
                         </label>
                     </div>
                     <div class="grid">
@@ -72,50 +73,23 @@
                             <td><b>Edytuj</b></td>
                             <td><b>Usuń</b></td>
                         </th>
-                        <tr>
+                        <tr th:each = "bilet : ${biletList}">
                             <td></td>
-                            <td>1</td>
-                            <td>2022-01-01 13:30</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
-                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>2</td>
-                            <td>2022-02-01 18:30</td>
-                            <td>3</td>
-                            <td>1</td>
-                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
-                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>3</td>
-                            <td>2022-03-01 17:30</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
-                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>4</td>
-                            <td>2022-03-09 17:50</td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
-                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>5</td>
-                            <td>2022-05-01 14:30</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
-                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
+                            <td th:text="${bilet.getField('nr_biletu')}">Numer biletu</td>
+                            <td th:text="${bilet.getField('data_skasowania')}">Data skasowania</td>
+                            <td th:text="${bilet.getField('nr_pasazera')}">Numer pasażera</td>
+                            <td th:text="${bilet.getField('nr_rodzaju_biletu')}">Numer rodzaju biletu</td>
+                            <td>
+                                <a th:href="@{#}" role="button" data-target="modal-example" th:onClick="toggleModal(event)">Edytuj</a>
+
+                            </td>
+                            <td>
+                                <form method="POST" th:action="@{/delete}" style="height:30px">
+                                    <input type="hidden" name="nazwa_tabeli" value="bilet">
+                                    <input type="hidden" name="nr_biletu" th:value="${bilet.getField('nr_biletu')}">
+                                    <button role="button" type="submit" value="Delete" style="width: 110px">Usuń</button>
+                                </form>
+                            </td>
                         </tr>
                         <tr>
                             <td></td>

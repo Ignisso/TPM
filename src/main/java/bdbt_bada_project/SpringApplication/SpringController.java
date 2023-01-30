@@ -1,4 +1,5 @@
 package bdbt_bada_project.SpringApplication;
+import bdbt_bada_project.SpringApplication.Database.Bilet;
 import bdbt_bada_project.SpringApplication.Database.DAO;
 import bdbt_bada_project.SpringApplication.Database.Przystanek;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Configuration
 public class SpringController implements WebMvcConfigurer {
@@ -31,10 +33,26 @@ public class SpringController implements WebMvcConfigurer {
 
     @Controller
     public class DashboardController {
+        @RequestMapping("/main_admin/bilety")
+        public String viewBiletyAdminPanel(Model model) {
+            System.out.println("XD");
+            Bilet bilet = new Bilet();
+            DAO<Bilet> biletDAO = new DAO<Bilet>();
+            List<Bilet> biletList = biletDAO.selectAll(bilet);
+            for(Bilet b: biletList) {
+                System.out.println(b);
+            }
+            model.addAttribute("biletList", biletList);
+
+            return "/admin/bilety";
+        }
+
         @RequestMapping("/main")
         public String defaultAfterLogin(HttpServletRequest request) {
-            if (request.isUserInRole("ADMIN"))
+            if (request.isUserInRole("ADMIN")){
+                System.out.println("XD2");
                 return "redirect:/main_admin/bilety";
+            }
             else if (request.isUserInRole("USER"))
                 return "redirect:/main_user";
             else if (request.isUserInRole("CONTROLLER"))
@@ -46,7 +64,7 @@ public class SpringController implements WebMvcConfigurer {
         @RequestMapping("/login")
         public String keepLoggedIn(HttpServletRequest request) {
             if (request.isUserInRole("ADMIN")) {
-                return "redirect:/main_admin";
+                return "redirect:/main_admin/bilety";
             }
             else if (request.isUserInRole("USER")) {
                 return "redirect:/main_user";
@@ -60,10 +78,6 @@ public class SpringController implements WebMvcConfigurer {
 
 
 
-    @RequestMapping(value={"/main_admin"})
-    public String showAdminPage(Model model) {
-        return "admin/main_admin";
-    }
     @RequestMapping(value={"/main_user"})
     public String showUserPage(Model model) {
         return "user/main_user";
@@ -72,6 +86,8 @@ public class SpringController implements WebMvcConfigurer {
     public String showControllerPage(Model model) {
         return "user/main_controller";
     }
+
+
 
     /**
      * 		Integer in_line = 17;

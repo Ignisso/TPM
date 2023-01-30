@@ -5,7 +5,7 @@ import java.sql.*;
 public class DatabaseController {
     Connection active = null;
     private String getURL() {
-        final String Host     = "localhost";
+        final String Host     = "192.168.0.87";
         final String Port     = "3306";
         final String Database = "tpm";
         final String Prefix   = "jdbc:mysql://";
@@ -13,8 +13,8 @@ public class DatabaseController {
     }
 
     private void establishConnection() {
-        final String User     = "root";
-        final String Password = "";
+        final String User     = "ignisso";
+        final String Password = "fire";
         try {
             active = DriverManager.getConnection(getURL(), User, Password);
         } catch (Exception ex) {
