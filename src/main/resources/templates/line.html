@@ -1,37 +1,10 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-    <head>
-        <!--link rel="stylesheet" type="text/css" href="debug.css"/-->
-        <link rel="stylesheet" type="text/css" href="/css/scrollbar.css"/>
-        <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Linia nr 33</title>
+<head th:replace="fragments/head :: head">
+    <title id="title">Linia nr 33</title>
     </head>
     <body>
-    <nav class="div-navbar" style="background-color: #141e26; padding: 15px; height: 120px; width: 100%; position:fixed; top: 0">
-        <ul>
-            <a th:href="@{/index}">
-                <img th:src="@{/img/logo.png}" alt="Logo" class="img-fluid" width="64px">
-                <li style="color:white"><b>Tramwajowe Przedsiębiorstwo Miejskie</b></li>
-            </a>
-        </ul>
-        <ul>
-            <li><a th:href="@{/index}">Strona Główna</a></li>
-            <li> | </li>
-            <li><a th:href="@{/line}"><u>Rozkłady jazdy</u></a></li>
-            <li>  </li>
-            <li sec:authorize="isAnonymous()"><a  th:href="@{/login}" role="button">Zaloguj się</a></li>
-            <li sec:authorize="hasRole('ADMIN')" ><a th:href="@{/main}" role="button">Panel administratora</b></a></li>
-            <li sec:authorize="hasRole('CONTROLLER')" ><a th:href="@{/main}" role="button">Panel kontrolera</b></a></li>
-            <li sec:authorize="hasRole('USER')" ><a th:href="@{/main}" role="button">Panel pasażera</b></a></li>
-            <li sec:authorize="isAuthenticated()">
-                <form method="POST" th:action="@{/logout}" style="height:20px">
-                    <button role="button" type="submit" value="Sign Out">Wyloguj się</button>
-                </form>
-            </li>
-        </ul>
-    </nav>
+    <nav th:replace="fragments/navbar :: navbar-line"></nav>
     <div class="page-content" style="padding: 20px; margin: 30px; margin-top: 120px">
             <div class="line-numbers" style="display:flex; justify-content: space-between; padding: 30px">
                 <a href="#" style="width: 64px; height: 62.5px;" role="button" class="outline">1</a>

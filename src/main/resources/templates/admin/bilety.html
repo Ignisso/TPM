@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-    <head>
-        <!--link rel="stylesheet" type="text/css" href="debug.css"/-->
-        <link rel="stylesheet" type="text/css" href="/css/scrollbar.css"/>
-        <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Witaj [[${#httpServletRequest.remoteUser}]]</title>
+<head th:replace="fragments/head :: head">
+    <title id="title">Witaj [[${#httpServletRequest.remoteUser}]]</title>
     </head>
     <body>
         <dialog id="modal-example">
@@ -40,6 +35,7 @@
                         <option value="5">Bilet miesięczny ULGOWY</option>
                         <option value="6">Bilet miesięczny NORMALNY</option>
                     </select>
+                    <span id="error_span">Error</span>
                 <footer style="float:right">
 
                     <a th:href="@{#}"role="button" class="secondary" data-target="modal-example" onClick="toggleModal(event)">Anuluj</a>
@@ -48,29 +44,7 @@
                 </form>
             </article>
         </dialog>
-        <nav class="div-navbar" style="background-color: #141e26; padding: 15px; height: 120px; width: 100%; position:fixed; top: 0">
-            <ul>
-                <a th:href="@{/index}">
-                    <img th:src="@{/img/logo.png}" alt="Logo" class="img-fluid" width="64px">
-                    <li style="color:white"><b>Tramwajowe Przedsiębiorstwo Miejskie</b></li>
-                </a>
-            </ul>
-            <ul>
-                <li><a th:href="@{/index}">Strona Główna</a></li>
-                <li> | </li>
-                <li><a th:href="@{/line}">Rozkłady jazdy</a></li>
-                <li>  </li>
-                <li sec:authorize="isAnonymous()"><a  th:href="@{/login}" role="button">Zaloguj się</a></li>
-                <li sec:authorize="hasRole('ADMIN')" ><a th:href="@{/main}" role="button">Witaj, administratorze!</b></a></li>
-                <li sec:authorize="hasRole('CONTROLLER')" ><a th:href="@{/main}" role="button">Witaj, kontrolerze!</b></a></li>
-                <li sec:authorize="hasRole('USER')" ><a th:href="@{/main}" role="button">Witaj, pasażerze!</b></a></li>
-                <li sec:authorize="isAuthenticated()">
-                    <form method="POST" th:action="@{/logout}" style="height:20px">
-                        <button role="button" type="submit" value="Sign Out">Wyloguj się</button>
-                    </form>
-                </li>
-            </ul>
-        </nav>
+        <nav th:replace="fragments/navbar :: navbar-main"></nav>
         <div class="page-content" style="padding: 20px; margin: 30px; margin-top: 120px">
             <div class="admin-header" style="display:flex; justify-content: space-between; padding: 20px; padding-left: 60px">
                     <span style="font-size: 26pt; color: white"><b>Konsola administratora</b></span>
@@ -153,6 +127,7 @@
         </div>
         <script type="text/javascript" th:src="@{/js/modal.js}"></script>
         <script type="text/javascript" th:src="@{/js/main_admin.js}"></script>
+        <script type="text/javascript" th:src="@{/js/validate.js}"></script>
     </body>
 
 
