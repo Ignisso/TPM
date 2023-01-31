@@ -7,19 +7,16 @@
     <dialog id="modal-example">
         <article>
             <h3>Tabela Bilet</h3>
-            <form th:action="@{/update}" method="post">
-                <input type="hidden" id="numer_pasazera" name="numer_pasazera" value="1">
+            <form th:action="@{/buyBilet}" th:object="${updateBilet}" method="post">
                 <label for="rodzaj_biletu">Rodzaj biletu</label>
-                <select id="rodzaj_biletu" name="rodzaj_biletu" required>
+                <select id="rodzaj_biletu"  th:field="*{nr_rodzaju_biletu}" name="rodzaj_biletu" required>
                     <option value="" disabled selected hidden> Wybierz rodzaj biletu</option>
-                    <option value="1">Bilet jednorazowy</option>
-                    <option value="3">Bilet jednodniowy</option>
-                    <option value="5">Bilet miesięczny<option>
-                </select>
-                <select id="czy_ulgowy" name="czy_ulgowy" required>
-                    <option value="0" selected>NORMALNY</option>
-                    <option value="1">ULGOWY</option>
-
+                    <option value="1">Bilet jednorazowy ULGOWY</option>
+                    <option value="2">Bilet jednorazowy NORMALNY</option>
+                    <option value="3">Bilet jednodniowy ULGOWY</option>
+                    <option value="4">Bilet jednodniowy NORMALNY</option>
+                    <option value="5">Bilet miesięczny ULGOWY</option>
+                    <option value="6">Bilet miesięczny NORMALNY</option>
                 </select>
                 <footer style="float:right">
 
@@ -68,9 +65,9 @@
                         </div>
 
                         <div class="progress-bar" style="text-align: center;">
-                            <span style="font-size: 10pt"><b>Pozostały:</b>2 godziny 12 minut</span>
-                            <progress value="132" max="1440"></progress>
-                            <span style="font-size: 10pt" th:utext="'<b>Data skasowania: </b>' + ${bilet.getField('data_skasowania')}"><b>Data skasowania: </b>29.01.2023 10:00:00</span>
+                            <span style="font-size: 10pt"></span>
+                            <progress></progress>
+                            <span style="font-size: 10pt" th:utext="'<b>Data skasowania: </b>' + ${bilet.getField('data_skasowania')}"></span>
                         </div>
                         
                     </div>

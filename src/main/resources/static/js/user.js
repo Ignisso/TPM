@@ -1,3 +1,5 @@
+let tickets;
+
 const formatDate = (date) => {
     return `${("00" + date.getDate()).slice (-2)}.${("00" + (date.getMonth() + 1)).slice (-2)}.${date.getFullYear()} ${("00" + (date.getHours())).slice (-2)}:${("00" + (date.getMinutes())).slice (-2)}:${("00" + (date.getSeconds())).slice (-2)}`
 }
@@ -67,34 +69,13 @@ const humanizeTimestamp = (timestamp) => {
     return final_string;
 }
 
-const tickets = document.querySelectorAll('div.ticket-container');
-tickets.forEach(element => {
-    const ticket_name = element.children[1].children[0].textContent.substr(8);
-
-    const scan_date = element.children[1].children[2].children[2].textContent.substr(17);
-
-    if(ticket_name === "Bilet jednoprzejazdowy" || ticket_name === "Bilet jednoprzejazdowy ULGOWY") {
-        element.children[1].children[2].children[1].setAttribute('max', 5400);
-        element.children[1].children[2].children[1].setAttribute('value', 5400 - (Date.now() - parseDate(scan_date))/1000);
-    } else if (ticket_name === "Bilet 24-godzinny" || ticket_name === "Bilet 24-godzinny ULGOWY") {
-        element.children[1].children[2].children[1].setAttribute('max', 86400);
-        element.children[1].children[2].children[1].setAttribute('value', 86400 - (Date.now() - parseDate(scan_date))/1000);
-    } else if (ticket_name === "Bilet miesięczny" || ticket_name === "Bilet jednoprzejazdowy ULGOWY") {
-        element.children[1].children[2].children[1].setAttribute('max', 2592000);
-        element.children[1].children[2].children[1].setAttribute('value', 2592000 - (Date.now() - parseDate(scan_date))/1000);
-    }
-
-
-
-})
 
 const updateTime = () => {
     tickets.forEach(element => {
+        if(element.children[1].children[2].children.length <= 1) return;
         const value = element.children[1].children[2].children[1].getAttribute('value');
-        const next_value = value - 100;
+        const next_value = value - 1;
         if(value !== null) {
-            element.children[1].children[2].children[1].setAttribute('value', next_value);
-            element.children[1].children[2].children[0].innerHTML = `<b>Pozostało: </b> ${humanizeTimestamp(next_value)}`
             if(value < 0) {
                 const div = document.querySelector('div.progress-bar');
                 element.children[1].children[2].children[0].innerHTML = "<b>BILET STRACIŁ WAŻNOŚĆ</b>"
@@ -102,8 +83,35 @@ const updateTime = () => {
                 element.children[1].children[2].children[1].remove();
                 element.children[1].children[2].children[1].remove();
             }
+            else {
+                element.children[1].children[2].children[1].setAttribute('value', next_value);
+                element.children[1].children[2].children[0].innerHTML = `<b>Pozostało: </b> ${humanizeTimestamp(next_value)}`
+            }
         }
     })
 }
 
-setInterval(updateTime, 1000);
+const onLoad = () => { 
+    tickets = document.querySelectorAll('div.ticket-container');
+    tickets.forEach(element => {
+        const ticket_name = element.children[1].children[0].textContent.substr(8);
+        const scan_date = element.children[1].children[2].children[2].textContent.substr(17);
+
+        if(ticket_name === "Bilet jednoprzejazdowy" || ticket_name === "Bilet jednoprzejazdowy ULGOWY") {
+            element.children[1].children[2].children[1].setAttribute('max', 5400);
+            element.children[1].children[2].children[1].setAttribute('value', 5400 - (Date.now() - parseDate(scan_date))/1000);
+        } else if (ticket_name === "Bilet 24-godzinny" || ticket_name === "Bilet 24-godzinny ULGOWY") {
+            element.children[1].children[2].children[1].setAttribute('max', 86400);
+            element.children[1].children[2].children[1].setAttribute('value', 86400 - (Date.now() - parseDate(scan_date))/1000);
+        } else if (ticket_name === "Bilet miesięczny" || ticket_name === "Bilet jednoprzejazdowy ULGOWY") {
+            element.children[1].children[2].children[1].setAttribute('max', 2592000);
+            element.children[1].children[2].children[1].setAttribute('value', 2592000 - (Date.now() - parseDate(scan_date))/1000);
+        }
+    })
+    setInterval(updateTime, 1000);
+}
+
+
+window.onload = () => {
+    onLoad()
+}

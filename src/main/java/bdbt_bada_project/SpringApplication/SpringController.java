@@ -98,7 +98,19 @@ public class SpringController implements WebMvcConfigurer {
                 // We are updating
                 biletDAO.update(bilet);
             }
-            return "redirect:/main_admin/bilety";
+            return "redirect:/main_user";
+        }
+
+        @RequestMapping(value = "/buyBilet", method = RequestMethod.POST)
+        public String viewBoughtTicker(@ModelAttribute("bilet")  Bilet bilet, Model model) {
+            DAO<Bilet> biletDAO = new DAO<Bilet>();
+            List<Bilet> biletList = biletDAO.selectAll(new Bilet());
+            bilet.setnr_biletu(biletList.size() + 1);
+            bilet.setnr_pasazera(22);
+            System.out.println(bilet);
+            biletDAO.insert(bilet);
+
+            return "redirect:/main_user";
         }
 
         @RequestMapping(value = "/updatePrzystanek", method = RequestMethod.POST)
