@@ -3,7 +3,8 @@ package bdbt_bada_project.SpringApplication;
 import java.sql.*;
 
 public class DatabaseController {
-    Connection active = null;
+    private Connection active = null;
+    private String lastSql;
     private String getURL() {
         final String Host     = "192.168.0.87";
         final String Port     = "3306";
@@ -33,6 +34,7 @@ public class DatabaseController {
     }
 
     public ResultSet select(String query) {
+        lastSql = query;
         establishConnection();
         if (active == null)
             return null;
@@ -46,6 +48,7 @@ public class DatabaseController {
     }
 
     public int execute(String sql) {
+        lastSql = sql;
         establishConnection();
         if (active == null)
             return -1;
@@ -67,6 +70,10 @@ public class DatabaseController {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public String getLastSql() {
+        return lastSql;
     }
 }
 

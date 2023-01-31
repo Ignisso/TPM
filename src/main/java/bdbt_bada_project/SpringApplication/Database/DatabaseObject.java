@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-abstract class DatabaseObject {
+public abstract class DatabaseObject {
     protected List<Object> field = new ArrayList<>();
     protected Map<Integer, String> fieldNames = new HashMap();
     protected String tableName;

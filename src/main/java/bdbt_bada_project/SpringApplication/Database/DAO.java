@@ -53,11 +53,11 @@ public class DAO<T extends DatabaseObject> {
         String sql = "SELECT * FROM " + info.getTableName();
         if (fields != null) {
             sql += " WHERE ";
-            for (int i = 0; i < fields.length - 1; i++) {
+            for (int i = 1; i < fields.length; i++) {
                 sql += info.getFieldName(fields[i]) + " = " + info.getField(fields[i]) + " AND ";
             }
-            if (fields.length > 2)
-                sql += info.getFieldName(fields[fields.length - 1]) + " = " + info.getField(fields[fields.length - 1]);
+            if (fields.length >= 1)
+                sql += info.getFieldName(fields[0]) + " = " + info.getField(fields[0]);
         }
         try {
             ResultSet rs = dbcon.select(sql);
@@ -152,5 +152,9 @@ public class DAO<T extends DatabaseObject> {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public String getLastSql() {
+        return dbcon.getLastSql();
     }
 }
