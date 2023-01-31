@@ -7,54 +7,29 @@
     <nav th:replace="fragments/navbar :: navbar-line"></nav>
     <div class="page-content" style="padding: 20px; margin: 30px; margin-top: 120px">
             <div class="line-numbers" style="display:flex; justify-content: space-between; padding: 30px">
-                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="outline">1</a>
-                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">3</a>
-                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">6</a>
-                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">9</a>
-                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">13</a>
-                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">17</a>
-                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">22</a>
-                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">24</a>
-                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">26</a>
-                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">28</a>
-                <a href="#" style="width: 64px; height: 62.5px;" role="button">33</a>
-                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="outline">35</a>
-                <a href="#" style="width: 64px; height: 62.5px;" role="button" class="secondary outline">78</a>
+                <a th:each="dl : ${distinct_lines}" th:href="@{/line} + '?linia=' + ${dl}" style="width: 64px; height: 62.5px;" role="button"
+                   th:class="${dl} == ${line} ? '' : 'outline'" class="outline" th:text="${dl}">0</a>
             </div>
             <hr style="width: 95%; margin-left: auto; margin-right: auto;">
             <div class="two-columns" style="display: flex; padding: 10px;justify-content: space-between;">
                 <div class="tram-stops">
                     <div class="direction-header" style="display: flex;align-content:center; padding: 10px">
                         <div class="direction-header-text" style="display: flex; padding: 10px">
-                            <span style="font-size: 24pt; color: white"><b>Anielewicza → Nowolipki</b></span>
+                            <span style="font-size: 24pt; color: white" th:text="${first_stop} + ' → ' + ${last_stop}">
+                                <b>Anielewicza → Nowolipki</b></span>
                         </div>
                         <div class="direction-header-button" style="padding: 10px; display: flex">
-                            <a role="button"  style="display: block; margin: auto" href="#">
+                            <a role="button"  style="display: block; margin: auto"
+                               th:href="@{/line} + '?linia=' + ${line} + '&kierunek=' + ${change_forward}">
                             Odwróć
                             </a>
                         </div>
                     </div>
                     <div class="direction-table">
                     	<table>
-                		<tr>
-                            <td>Rondo Radosława 01</td>
-                            <td>1 min</td>
-                        </tr>
-                		<tr>
-                            <td>Stawki 03</td>
-                            <td>3 min</td>
-                        </tr>
-                        <tr>
-                            <td>Anielewicza 02</td>
-                            <td>5 min</td>
-                        </tr>
-                        <tr>
-                            <td>Nowolipki 03</td>
-                            <td>6 min</td>
-                        </tr>
-                        <tr>
-                            <td>Nowolipki 03</td>
-                            <td>9 min</td>
+                		<tr th:each = "stop : ${stops}">
+                            <td th:text="${stop.getLeft()}">Przystanek 00</td>
+                            <td th:text="${stop.getRight()} + ' min'">0 min</td>
                         </tr>
                     	</table>
                     </div>
@@ -66,24 +41,8 @@
                     </div>
                     <div class="schedule-table">
                     	<table>
-                        <tr>
-                            <td>05 </td>
-                            <td>15</td>
-                            <td>30</td>
-                            <td>45</td>
-                        </tr>
-                        <tr>
-                            <td>06 </td>
-                            <td>20</td>
-                            <td>40</td>
-                            <td></td>
-                        </tr>
-                        <tr></tr>
-                        <tr>
-                            <td>07 </td>
-                            <td>30</td>
-                            <td></td>
-                            <td></td>
+                        <tr  th:each="departure : ${departures}" >
+                            <td th:each="d: ${departure}" th:text="${d}">00</td>
                         </tr>
                     </table>
                     </div>
