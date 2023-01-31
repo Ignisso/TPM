@@ -8,16 +8,16 @@
 <div class="page-content" style="padding: 20px; margin: 30px; margin-top: 120px; margin-left: 25%; margin-right: 25%">
 		<form method="post" th:action="@{/login}">
 			<label for="login">Nazwa użytkownika</label>
-	      
+
 	      	<input type="text" id="login" name="username" placeholder="Wpisz nazwę użytkownika">
-		    
+
 
 		  	<label for="password">Hasło</label>
 		  	<input type="password" id="password" name="password" placeholder="Wpisz swoje hasło">
 		  	<small th:if="${param.error}"}>BŁĄD: Złe hasło bądź nazwa użytkownika </small>
 		  <button type="submit">Zaloguj się</button>
 
-		</form>		
+		</form>
 	</div>
 	<script type="text/javascript" th:src="@{/js/login.js}"></script>
 </body>
