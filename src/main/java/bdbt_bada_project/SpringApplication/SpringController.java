@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -88,6 +89,7 @@ public class SpringController implements WebMvcConfigurer {
             Bilet temp = new Bilet();
             DAO<Bilet> biletDAO = new DAO<Bilet>();
             List<Bilet> biletList = biletDAO.selectAll(temp);
+            Collections.reverse(biletList);
             System.out.println(bilet);
             if((Integer)bilet.getField("nr_biletu") == (Integer)biletList.get(biletList.size() - 1).getField("nr_biletu") + 1) {
                 biletDAO.insert(bilet);

@@ -92,9 +92,17 @@ const updateTime = () => {
     tickets.forEach(element => {
         const value = element.children[1].children[2].children[1].getAttribute('value');
         const next_value = value - 100;
-        element.children[1].children[2].children[1].setAttribute('value', next_value);
-        element.children[1].children[2].children[0].innerHTML = `<b>Pozostało: </b> ${humanizeTimestamp(next_value)}`
-
+        if(value !== null) {
+            element.children[1].children[2].children[1].setAttribute('value', next_value);
+            element.children[1].children[2].children[0].innerHTML = `<b>Pozostało: </b> ${humanizeTimestamp(next_value)}`
+            if(value < 0) {
+                const div = document.querySelector('div.progress-bar');
+                element.children[1].children[2].children[0].innerHTML = "<b>BILET STRACIŁ WAŻNOŚĆ</b>"
+                element.children[1].children[2].children[0].setAttribute("style", "color:red")
+                element.children[1].children[2].children[1].remove();
+                element.children[1].children[2].children[1].remove();
+            }
+        }
     })
 }
 

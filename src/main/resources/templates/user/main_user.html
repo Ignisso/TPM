@@ -40,7 +40,7 @@
                 <div class="ticket-container" style="display: flex; margin: 10px;">
                     <div class="qr-code">
                         <figure style="display: block; margin: auto; width: 256px;">
-                            <img th:src="@{/img/qr1.png}" alt="Kod QR" class="img-fluid">
+                            <img th:src="'https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=localhost/scan?id=' + ${bilet.getField('nr_biletu')}" alt="Kod QR" class="img-fluid">
                         </figure>
                     </div>
                     <div class="ticket-info" style="margin: 15px; width: 100%">
