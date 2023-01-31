@@ -12,7 +12,8 @@ const validateInputNotEmpty = (event) => {
     }
 }
 const setPlaceholders = (event) => {
-    document.querySelector('input#numer_pasazera').setAttribute('value', event.target.getAttribute('value'));
+    document.querySelector('input#numer_biletu').value = (event.target.getAttribute('value')).toString();
+    document.querySelector('input#numer_przystanku').value = (event.target.getAttribute('value')).toString();
 }
 
 window.onload = () => {

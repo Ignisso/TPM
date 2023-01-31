@@ -3,6 +3,7 @@ import bdbt_bada_project.SpringApplication.Database.Bilet;
 import bdbt_bada_project.SpringApplication.Database.DAO;
 import bdbt_bada_project.SpringApplication.Database.Przystanek;
 import com.sun.net.httpserver.HttpsParameters;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,8 @@ public class SpringController implements WebMvcConfigurer {
 
     @Controller
     public class DashboardController {
+
+
         @RequestMapping("/main_admin/bilety")
         public String viewBiletyAdminPanel(Model model) {
             System.out.println("/main_admin/bilety");
@@ -44,18 +47,48 @@ public class SpringController implements WebMvcConfigurer {
                 System.out.println(b);
             }
             model.addAttribute("biletList", biletList);
-            Bilet updateBilet = new Bilet();
-            model.addAttribute("updateBilet", updateBilet);
+            model.addAttribute("updateBilet", new Bilet());
 
             return "/admin/bilety";
         }
 
-        @RequestMapping(value = "/update", method = RequestMethod.POST)
+        @RequestMapping("/main_admin/przystanki")
+        public String viewPrzystankiAdminPanel(Model model) {
+            System.out.println("/main_admin/przystanki");
+            Przystanek przystanek = new Przystanek();
+            DAO<Przystanek> przystanekDAO = new DAO<Przystanek>();
+            List<Przystanek> przystanekList = przystanekDAO.selectAll(przystanek);
+            for(Przystanek b: przystanekList) {
+                System.out.println(b);
+            }
+            model.addAttribute("przystanekList", przystanekList);
+            model.addAttribute("updatePrzystanek", new Przystanek());
+
+            return "/admin/przystanki";
+        }
+        @RequestMapping("/main_user")
+        public String viewUser(Model model) {
+            System.out.println("/main_user");
+            Bilet bilet = new Bilet();
+            bilet.setnr_pasazera(22);
+            DAO<Bilet> biletDAO = new DAO<Bilet>();
+            String[] fields = {"nr_pasazera"};
+            List<Bilet> biletList = biletDAO.selectByFieldsName(bilet, fields);
+            for(Bilet b: biletList) {
+                System.out.println(b);
+            }
+            model.addAttribute("biletList", biletList);
+            model.addAttribute("updateBilet", new Bilet());
+
+            return "/user/main_user";
+        }
+
+        @RequestMapping(value = "/updateBilet", method = RequestMethod.POST)
         public String viewBiletyAdminPanel(@ModelAttribute("bilet")  Bilet bilet) {
             Bilet temp = new Bilet();
             DAO<Bilet> biletDAO = new DAO<Bilet>();
             List<Bilet> biletList = biletDAO.selectAll(temp);
-
+            System.out.println(bilet);
             if((Integer)bilet.getField("nr_biletu") == (Integer)biletList.get(biletList.size() - 1).getField("nr_biletu") + 1) {
                 biletDAO.insert(bilet);
                 // We are adding
@@ -63,7 +96,43 @@ public class SpringController implements WebMvcConfigurer {
                 // We are updating
                 biletDAO.update(bilet);
             }
-            return "/admin/bilety";
+            return "redirect:/main_admin/bilety";
+        }
+
+        @RequestMapping(value = "/updatePrzystanek", method = RequestMethod.POST)
+        public String viewPrzystankiAdminPanel(@ModelAttribute("przystanek")  Przystanek przystanek) {
+            Przystanek temp = new Przystanek();
+            DAO<Przystanek> przystanekDAO = new DAO<Przystanek>();
+            List<Przystanek> przystanekList = przystanekDAO.selectAll(temp);
+            System.out.println(przystanek);
+            if((Integer)przystanek.getField("nr_przystanku") == (Integer)przystanekList.get(przystanekList.size() - 1).getField("nr_przystanku") + 1) {
+                przystanekDAO.insert(przystanek);
+                // We are adding
+            } else {
+                // We are updating
+                przystanekDAO.update(przystanek);
+            }
+            return "redirect:/main_admin/przystanki";
+        }
+
+        @RequestMapping(value = "/deleteBilet", method = RequestMethod.POST)
+        public String viewBiletyAdminPanelAfterDeletion(@ModelAttribute("bilet")  Bilet bilet) {
+            Bilet temp = new Bilet();
+            DAO<Bilet> biletDAO = new DAO<Bilet>();
+            System.out.println(bilet);
+            biletDAO.delete(bilet);
+
+            return "redirect:/main_admin/bilety";
+        }
+
+        @RequestMapping(value = "/deletePrzystanek", method = RequestMethod.POST)
+        public String viewPrzystankiAdminPanelAfterDeletion(@ModelAttribute("przystanek")  Przystanek przystanek) {
+            Przystanek temp = new Przystanek();
+            DAO<Przystanek> przystanekDAO = new DAO<Przystanek>();
+            System.out.println(przystanek);
+            przystanekDAO.delete(przystanek);
+
+            return "redirect:/main_admin/przystanki";
         }
 
         @RequestMapping("/main")

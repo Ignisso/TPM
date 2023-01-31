@@ -1,6 +1,7 @@
 package bdbt_bada_project.SpringApplication.Database;
 
 import bdbt_bada_project.SpringApplication.DatabaseController;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;

@@ -8,26 +8,21 @@
         <dialog id="modal-example">
             <article>
                 <h3>Tabela Bilety</h3>
-                <form th:action="@{/update}" th:object="${updateBilet}" method="post">
+                <form th:action="@{/updateBilet}" th:object="${updateBilet}" method="post">
                     <div class="grid">
-                        <input type="hidden" name="nazwa_tabeli" value="bilety">
                         <label for="numer_biletu">
                             Numer biletu
-                            <input type="number" th:field="*{nr_biletu}" id="numer_biletu" name="numer_biletu" placeholder="Numer biletu" disabled>
+                            <input type="number" th:field="*{nr_biletu}" id="numer_biletu" name="numer_biletu" placeholder="Numer biletu">
                         </label>
                         <label for="numer_pasazera">
-                            Numer biletu
-                            <input type="number" th:field="*{nr_pasazera}" id="numer_pasazera" name="numer_pasazera" placeholder="Numer pasazera" disabled>
+                            Numer pasażera
+                            <input type="number" th:field="*{nr_pasazera}" id="numer_pasazera" name="numer_pasazera" placeholder="Numer pasazera">
                         </label>
                     </div>
                     <div class="grid">
                         <label for="data_skasowania">
                             Data skasowania
-                            <input type="date" th:field="*{data_skasowania}" id="data_skasowania" name="data_skasowania">
-                        </label>
-                        <label for="czas_skasowania">
-                            Godzina skasowania
-                            <input type="time" th:field="*{czas_skasowania}" id="czas_skasowania" name="czas_skasowania">
+                            <input type="datetime-local" th:field="*{data_skasowania}" id="data_skasowania" name="data_skasowania">
                         </label>
                     </div>
                     <label for="rodzaj_biletu">Rodzaj biletu</label>
@@ -88,8 +83,7 @@
 
                             </td>
                             <td>
-                                <form method="POST" th:action="@{/delete}" style="height:30px">
-                                    <input type="hidden" name="nazwa_tabeli" value="bilet">
+                                <form method="POST" th:object="${updateBilet}" th:action="@{/deleteBilet}" style="height:30px">
                                     <input type="hidden" name="nr_biletu" th:value="${bilet.getField('nr_biletu')}">
                                     <button role="button" class="delete" type="submit" value="Delete" style="width: 110px">Usuń</button>
                                 </form>
@@ -104,7 +98,7 @@
             </div>
         </div>
         <script type="text/javascript" th:src="@{/js/modal.js}"></script>
-        <script type="text/javascript" th:src="@{/js/main_admin.js}"></script>
+        <script type="text/javascript" th:src="@{/js/bilety.js}"></script>
         <script type="text/javascript" th:src="@{/js/validate.js}"></script>
     </body>
 

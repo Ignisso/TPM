@@ -3,9 +3,9 @@ const formatDate = (date) => {
 }
 
 const parseDate =  (date) => {
-    const day = date.substr(0,2);
-    const month = date.substr(3,2);
-    const year = date.substr(6,4);
+    const year = date.substr(0,4);
+    const month = date.substr(5,2);
+    const day = date.substr(8,2);
     const hour = date.substr(11,2);
     const minute = date.substr(14,2);
     const seconds =  date.substr(17,2);
@@ -70,32 +70,31 @@ const humanizeTimestamp = (timestamp) => {
 const tickets = document.querySelectorAll('div.ticket-container');
 tickets.forEach(element => {
     const ticket_name = element.children[1].children[0].textContent.substr(8);
-    if(element.children[1].children[2].getAttribute('class') !== "scan-ticket") {
-        const scan_date = element.children[1].children[2].children[2].textContent.substr(17);
 
-        if(ticket_name === "Bilet jednoprzejazdowy") {
-            element.children[1].children[2].children[1].setAttribute('max', 5400);
-            element.children[1].children[2].children[1].setAttribute('value', 5400 - (Date.now() - parseDate(scan_date))/1000);
-        } else if (ticket_name === "Bilet 24-godzinny") {
-            element.children[1].children[2].children[1].setAttribute('max', 86400);
-            element.children[1].children[2].children[1].setAttribute('value', 86400 - (Date.now() - parseDate(scan_date))/1000);
-        } else if (ticket_name === "Bilet miesięczny") {
-            element.children[1].children[2].children[1].setAttribute('max', 2592000);
-            element.children[1].children[2].children[1].setAttribute('value', 2592000 - (Date.now() - parseDate(scan_date))/1000);
-        }
+    const scan_date = element.children[1].children[2].children[2].textContent.substr(17);
+
+    if(ticket_name === "Bilet jednoprzejazdowy" || ticket_name === "Bilet jednoprzejazdowy ULGOWY") {
+        element.children[1].children[2].children[1].setAttribute('max', 5400);
+        element.children[1].children[2].children[1].setAttribute('value', 5400 - (Date.now() - parseDate(scan_date))/1000);
+    } else if (ticket_name === "Bilet 24-godzinny" || ticket_name === "Bilet 24-godzinny ULGOWY") {
+        element.children[1].children[2].children[1].setAttribute('max', 86400);
+        element.children[1].children[2].children[1].setAttribute('value', 86400 - (Date.now() - parseDate(scan_date))/1000);
+    } else if (ticket_name === "Bilet miesięczny" || ticket_name === "Bilet jednoprzejazdowy ULGOWY") {
+        element.children[1].children[2].children[1].setAttribute('max', 2592000);
+        element.children[1].children[2].children[1].setAttribute('value', 2592000 - (Date.now() - parseDate(scan_date))/1000);
     }
-    
+
+
 
 })
 
 const updateTime = () => {
     tickets.forEach(element => {
-        if(element.children[1].children[2].getAttribute('class') !== "scan-ticket") {
-            const value = element.children[1].children[2].children[1].getAttribute('value');
-            const next_value = value - 100;
-            element.children[1].children[2].children[1].setAttribute('value', next_value);
-            element.children[1].children[2].children[0].innerHTML = `<b>Pozostało: </b> ${humanizeTimestamp(next_value)}`
-        }
+        const value = element.children[1].children[2].children[1].getAttribute('value');
+        const next_value = value - 100;
+        element.children[1].children[2].children[1].setAttribute('value', next_value);
+        element.children[1].children[2].children[0].innerHTML = `<b>Pozostało: </b> ${humanizeTimestamp(next_value)}`
+
     })
 }
 
