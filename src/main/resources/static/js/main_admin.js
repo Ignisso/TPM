@@ -1,7 +1,6 @@
 const onLoad = () => { 
     document.querySelector('input#numer_pasazera').addEventListener('blur', validateInputNotEmpty)
     document.querySelector('select#rodzaj_biletu').addEventListener('blur', validateInputNotEmpty)
-    
 }
 const validateInputNotEmpty = (event) => {
     console.log(event.target)
@@ -11,6 +10,9 @@ const validateInputNotEmpty = (event) => {
     } else {
         elem.setAttribute("aria-invalid", "true");
     }
+}
+const setPlaceholders = (event) => {
+    document.querySelector('input#numer_pasazera').setAttribute('value', event.target.getAttribute('value'));
 }
 
 window.onload = () => {

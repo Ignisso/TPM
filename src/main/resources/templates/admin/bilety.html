@@ -8,26 +8,30 @@
         <dialog id="modal-example">
             <article>
                 <h3>Tabela Bilety</h3>
-                <form th:action="@{/update}" method="post">
+                <form th:action="@{/update}" th:object="${updateBilet}" method="post">
                     <div class="grid">
                         <input type="hidden" name="nazwa_tabeli" value="bilety">
+                        <label for="numer_biletu">
+                            Numer biletu
+                            <input type="number" th:field="*{nr_biletu}" id="numer_biletu" name="numer_biletu" placeholder="Numer biletu" disabled>
+                        </label>
                         <label for="numer_pasazera">
-                            Numer pasażera
-                            <input type="number" id="numer_pasazera" name="numer_pasazera" placeholder="Numer pasazera" disabled>
+                            Numer biletu
+                            <input type="number" th:field="*{nr_pasazera}" id="numer_pasazera" name="numer_pasazera" placeholder="Numer pasazera" disabled>
                         </label>
                     </div>
                     <div class="grid">
                         <label for="data_skasowania">
                             Data skasowania
-                            <input type="date" id="data_skasowania" name="data_skasowania">
+                            <input type="date" th:field="*{data_skasowania}" id="data_skasowania" name="data_skasowania">
                         </label>
                         <label for="czas_skasowania">
                             Godzina skasowania
-                            <input type="time" id="czas_skasowania" name="czas_skasowania">
+                            <input type="time" th:field="*{czas_skasowania}" id="czas_skasowania" name="czas_skasowania">
                         </label>
                     </div>
                     <label for="rodzaj_biletu">Rodzaj biletu</label>
-                    <select id="rodzaj_biletu" name="rodzaj_biletu" required>
+                    <select id="rodzaj_biletu" th:field="*{nr_rodzaju_biletu}" name="rodzaj_biletu" required>
                         <option value="" disabled selected hidden> Wybierz rodzaj biletu</option>
                         <option value="1">Bilet jednorazowy ULGOWY</option>
                         <option value="2">Bilet jednorazowy NORMALNY</option>
@@ -80,20 +84,20 @@
                             <td th:text="${bilet.getField('nr_pasazera')}">Numer pasażera</td>
                             <td th:text="${bilet.getField('nr_rodzaju_biletu')}">Numer rodzaju biletu</td>
                             <td>
-                                <a th:href="@{#}" role="button" data-target="modal-example" th:onClick="toggleModal(event)">Edytuj</a>
+                                <a th:href="@{#}" class="edit" role="button" th:value="${bilet.getField('nr_biletu')}"  data-target="modal-example" onFocus="setPlaceholders(event)" onClick="toggleModal(event)">Edytuj</a>
 
                             </td>
                             <td>
                                 <form method="POST" th:action="@{/delete}" style="height:30px">
                                     <input type="hidden" name="nazwa_tabeli" value="bilet">
                                     <input type="hidden" name="nr_biletu" th:value="${bilet.getField('nr_biletu')}">
-                                    <button role="button" type="submit" value="Delete" style="width: 110px">Usuń</button>
+                                    <button role="button" class="delete" type="submit" value="Delete" style="width: 110px">Usuń</button>
                                 </form>
                             </td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Dodaj</a></td>
+                            <td><a th:href="@{#}" class="update" role="button" th:value="${biletList[biletList.size() - 1].getField('nr_biletu') + 1}" data-target="modal-example" onFocus="setPlaceholders(event)" onClick="toggleModal(event)">Dodaj</a></td>
                         </tr>
                         </table>
 

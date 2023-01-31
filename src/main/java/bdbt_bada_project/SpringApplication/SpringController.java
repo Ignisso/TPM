@@ -2,13 +2,14 @@ package bdbt_bada_project.SpringApplication;
 import bdbt_bada_project.SpringApplication.Database.Bilet;
 import bdbt_bada_project.SpringApplication.Database.DAO;
 import bdbt_bada_project.SpringApplication.Database.Przystanek;
+import com.sun.net.httpserver.HttpsParameters;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -35,7 +36,7 @@ public class SpringController implements WebMvcConfigurer {
     public class DashboardController {
         @RequestMapping("/main_admin/bilety")
         public String viewBiletyAdminPanel(Model model) {
-            System.out.println("XD");
+            System.out.println("/main_admin/bilety");
             Bilet bilet = new Bilet();
             DAO<Bilet> biletDAO = new DAO<Bilet>();
             List<Bilet> biletList = biletDAO.selectAll(bilet);
@@ -43,7 +44,25 @@ public class SpringController implements WebMvcConfigurer {
                 System.out.println(b);
             }
             model.addAttribute("biletList", biletList);
+            Bilet updateBilet = new Bilet();
+            model.addAttribute("updateBilet", updateBilet);
 
+            return "/admin/bilety";
+        }
+
+        @RequestMapping(value = "/update", method = RequestMethod.POST)
+        public String viewBiletyAdminPanel(@ModelAttribute("bilet")  Bilet bilet) {
+            Bilet temp = new Bilet();
+            DAO<Bilet> biletDAO = new DAO<Bilet>();
+            List<Bilet> biletList = biletDAO.selectAll(temp);
+
+            if((Integer)bilet.getField("nr_biletu") == (Integer)biletList.get(biletList.size() - 1).getField("nr_biletu") + 1) {
+                biletDAO.insert(bilet);
+                // We are adding
+            } else {
+                // We are updating
+                biletDAO.update(bilet);
+            }
             return "/admin/bilety";
         }
 
