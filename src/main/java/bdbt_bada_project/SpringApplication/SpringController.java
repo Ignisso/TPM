@@ -1,8 +1,5 @@
 package bdbt_bada_project.SpringApplication;
-import bdbt_bada_project.SpringApplication.Database.Bilet;
-import bdbt_bada_project.SpringApplication.Database.DAO;
-import bdbt_bada_project.SpringApplication.Database.Pair;
-import bdbt_bada_project.SpringApplication.Database.Przystanek;
+import bdbt_bada_project.SpringApplication.Database.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -136,6 +133,22 @@ public class SpringController implements WebMvcConfigurer {
 
             return "/admin/przystanki";
         }
+
+        @RequestMapping("/main_admin/trasy")
+        public String viewTrasyAdminPanel(Model model) {
+            System.out.println("/main_admin/trasy");
+            Trasa trasa = new Trasa();
+            DAO<Trasa> trasaDAO = new DAO<>();
+            List<Trasa> trasaList = trasaDAO.selectAll(trasa);
+            for(Trasa b: trasaList) {
+                System.out.println(b);
+            }
+            model.addAttribute("trasaList", trasaList);
+            model.addAttribute("updateTrasa", new Trasa());
+
+            return "/admin/trasy";
+        }
+
         @RequestMapping("/main_user")
         public String viewUser(Model model) {
             System.out.println("/main_user");
@@ -198,6 +211,22 @@ public class SpringController implements WebMvcConfigurer {
             return "redirect:/main_admin/przystanki";
         }
 
+        @RequestMapping(value = "/updateTrasa", method = RequestMethod.POST)
+        public String viewTrasyAdminPanel(@ModelAttribute("trasa")  Trasa trasa) {
+            Trasa temp = new Trasa();
+            DAO<Trasa> trasaDAO = new DAO<>();
+            List<Trasa> trasaList = trasaDAO.selectAll(temp);
+            System.out.println(trasa);
+            if((Integer)trasa.getField("nr_trasy") == (Integer)trasaList.get(trasaList.size() - 1).getField("nr_trasy") + 1) {
+                trasaDAO.insert(trasa);
+                // We are adding
+            } else {
+                // We are updating
+                trasaDAO.update(trasa);
+            }
+            return "redirect:/main_admin/trasy";
+        }
+
         @RequestMapping(value = "/deleteBilet", method = RequestMethod.POST)
         public String viewBiletyAdminPanelAfterDeletion(@ModelAttribute("bilet")  Bilet bilet) {
             Bilet temp = new Bilet();
@@ -216,6 +245,16 @@ public class SpringController implements WebMvcConfigurer {
             przystanekDAO.delete(przystanek);
 
             return "redirect:/main_admin/przystanki";
+        }
+
+        @RequestMapping(value = "/deleteTrasa", method = RequestMethod.POST)
+        public String viewTrasyAdminPanelAfterDeletion(@ModelAttribute("trasa")  Trasa trasa) {
+            Trasa temp = new Trasa();
+            DAO<Trasa> trasaDAO = new DAO<>();
+            System.out.println(trasa);
+            trasaDAO.delete(trasa);
+
+            return "redirect:/main_admin/trasy";
         }
 
         @RequestMapping("/main")

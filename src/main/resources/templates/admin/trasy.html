@@ -65,55 +65,22 @@
                             <td><b>Edytuj</b></td>
                             <td><b>Usuń</b></td>
                         </th>
-                        <tr>
+                        <tr th:each = "trasa : ${trasaList}">
                             <td></td>
-                            <td><b>1</b></td>
-                            <td><b>1</b></td>
-                            <td><b>0</b></td>
-                            <td><b>1</b></td>
-                            <td><b>1</b></td>
-                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
-                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><b>2</b></td>
-                            <td><b>2</b></td>
-                            <td><b>3</b></td>
-                            <td><b>1</b></td>
-                            <td><b>2</b></td>
-                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
-                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><b>3</b></td>
-                            <td><b>3</b></td>
-                            <td><b>6</b></td>
-                            <td><b>1</b></td>
-                            <td><b>3</b></td>
-                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
-                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><b>4</b></td>
-                            <td><b>4</b></td>
-                            <td><b>9</b></td>
-                            <td><b>1</b></td>
-                            <td><b>4</b></td>
-                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
-                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><b>5</b></td>
-                            <td><b>5</b></td>
-                            <td><b>13</b></td>
-                            <td><b>1</b></td>
-                            <td><b>5</b></td>
-                            <td><a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)">Edytuj</a></td>
-                            <td><a th:href="@{/delete}" role="button">Usuń</a></td>
+                            <td th:text="${trasa.getField('nr_trasy')}">Numer trasy</td>
+                            <td th:text="${trasa.getField('kolejnosc')}">Kolejność</td>
+                            <td th:text="${trasa.getField('czas')}">Czas</td>
+                            <td th:text="${trasa.getField('nr_linii')}">Numer linii</td>
+                            <td th:text="${trasa.getField('nr_przystanku')}">Numer przystanku</td>
+                            <td>
+                                <a th:href="@{#}" class="edit" role="button" th:value="${trasa.getField('nr_trasy')}"  data-target="modal-example" onFocus="setPlaceholders(event)" onClick="toggleModal(event)">Edytuj</a>
+                            </td>
+                            <td>
+                                <form method="POST" th:object="${updateTrasa}" th:action="@{/deleteTrasa}" style="height:30px">
+                                    <input type="hidden" name="nr_trasy" th:value="${trasa.getField('nr_trasy')}">
+                                    <button role="button" class="delete" type="submit" value="Delete" style="width: 110px">Usuń</button>
+                                </form>
+                            </td>
                         </tr>
                         <tr>
                             <td></td>
