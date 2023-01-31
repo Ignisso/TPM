@@ -85,7 +85,7 @@
         <ul>
             <li><a th:href="@{/index}">Strona Główna</a></li>
             <li> | </li>
-            <li><a th:href="@{/line}"><u>Rozkłady jazdy</u></a></li>
+            <li><a th:href="@{/line}">Rozkłady jazdy</a></li>
             <li>  </li>
             <li sec:authorize="isAnonymous()"><a  th:href="@{/login}" role="button">Zaloguj się</a></li>
             <li sec:authorize="hasRole('ADMIN')" ><a th:href="@{/main}" role="button">Witaj, administratorze!</b></a></li>

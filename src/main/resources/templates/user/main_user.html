@@ -7,19 +7,16 @@
     <dialog id="modal-example">
         <article>
             <h3>Tabela Bilet</h3>
-            <form th:action="@{/update}" method="post">
-                <input type="hidden" id="numer_pasazera" name="numer_pasazera" value="1">
+            <form th:action="@{/buyBilet}" th:object="${updateBilet}" method="post">
                 <label for="rodzaj_biletu">Rodzaj biletu</label>
-                <select id="rodzaj_biletu" name="rodzaj_biletu" required>
+                <select id="rodzaj_biletu"  th:field="*{nr_rodzaju_biletu}" name="rodzaj_biletu" required>
                     <option value="" disabled selected hidden> Wybierz rodzaj biletu</option>
-                    <option value="1">Bilet jednorazowy</option>
-                    <option value="3">Bilet jednodniowy</option>
-                    <option value="5">Bilet miesięczny<option>
-                </select>
-                <select id="czy_ulgowy" name="czy_ulgowy" required>
-                    <option value="0" selected>NORMALNY</option>
-                    <option value="1">ULGOWY</option>
-
+                    <option value="1">Bilet jednorazowy ULGOWY</option>
+                    <option value="2">Bilet jednorazowy NORMALNY</option>
+                    <option value="3">Bilet jednodniowy ULGOWY</option>
+                    <option value="4">Bilet jednodniowy NORMALNY</option>
+                    <option value="5">Bilet miesięczny ULGOWY</option>
+                    <option value="6">Bilet miesięczny NORMALNY</option>
                 </select>
                 <footer style="float:right">
 
@@ -36,15 +33,20 @@
                     <span style="font-size: 26pt; color: white"><b>Twoje bilety</b></span>
                     <a th:href="@{#}" role="button" data-target="modal-example" onClick="toggleModal(event)" style="align: right; width: 192px; height: 62.5px;"> Kup bilet </a>
             </div>
-            <div class=ticket>
+            <div th:each="bilet : ${biletList}" class=ticket>
                 <div class="ticket-container" style="display: flex; margin: 10px;">
                     <div class="qr-code">
                         <figure style="display: block; margin: auto; width: 256px;">
-                            <img th:src="@{/img/qr1.png}" alt="Kod QR" class="img-fluid">
+                            <img th:src="'https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=localhost/scan?id=' + ${bilet.getField('nr_biletu')}" alt="Kod QR" class="img-fluid">
                         </figure>
                     </div>
                     <div class="ticket-info" style="margin: 15px; width: 100%">
-                        <span style="font-size: 20pt; color: white"><b>RODZAJ: </b>Bilet jednoprzejazdowy</span>
+                        <span style="font-size: 20pt; color: white" th:remove="${bilet.getField('nr_rodzaju_biletu')} == 1 ? none : tag" th:utext="${bilet.getField('nr_rodzaju_biletu')} == 1 ? '<b>RODZAJ: </b>Bilet jednoprzejazdowy'"></span>
+                        <span style="font-size: 20pt; color: white" th:remove="${bilet.getField('nr_rodzaju_biletu')} == 2 ? none : tag" th:utext="${bilet.getField('nr_rodzaju_biletu')} == 2 ? '<b>RODZAJ: </b>Bilet 24-godzinny'"></span>
+                        <span style="font-size: 20pt; color: white" th:remove="${bilet.getField('nr_rodzaju_biletu')} == 3 ? none : tag" th:utext="${bilet.getField('nr_rodzaju_biletu')} == 3 ? '<b>RODZAJ: </b>Bilet miesięczny'"></span>
+                        <span style="font-size: 20pt; color: white" th:remove="${bilet.getField('nr_rodzaju_biletu')} == 4 ? none : tag" th:utext="${bilet.getField('nr_rodzaju_biletu')} == 4 ? '<b>RODZAJ: </b>Bilet jednoprzejazdowy ULGOWY'"></span>
+                        <span style="font-size: 20pt; color: white" th:remove="${bilet.getField('nr_rodzaju_biletu')} == 5 ? none : tag" th:utext="${bilet.getField('nr_rodzaju_biletu')} == 5 ? '<b>RODZAJ: </b>Bilet 24-godzinny ULGOWY'"></span>
+                        <span style="font-size: 20pt; color: white" th:remove="${bilet.getField('nr_rodzaju_biletu')} == 6 ? none : tag" th:utext="${bilet.getField('nr_rodzaju_biletu')} == 6 ? '<b>RODZAJ: </b>Bilet miesięczny ULGOWY'"></span>
                         <div class="ticket-extra-info" style="display: flex;justify-content: space-between;">
                             <div class="ticket-zones" style="display: flex">
                                 <figure style="display: block; padding-left: 10px; margin: auto; width: 64px;">
@@ -53,87 +55,25 @@
 
                             </div>
                             <div class="ticket-price" style="display: flex; content-align: left; text-align:right;">
-                            
-                                <span style="font-size: 40pt; color: white"><b>2.40</b></span>
+                                <span style="font-size: 40pt; color: white" th:remove="${bilet.getField('nr_rodzaju_biletu')} == 1 ? none : tag" th:utext="${bilet.getField('nr_rodzaju_biletu')} == 1 ? '<b>4.80</b>'"></span>
+                                <span style="font-size: 40pt; color: white" th:remove="${bilet.getField('nr_rodzaju_biletu')} == 2 ? none : tag" th:utext="${bilet.getField('nr_rodzaju_biletu')} == 2 ? '<b>14.60</b>'"></span>
+                                <span style="font-size: 40pt; color: white" th:remove="${bilet.getField('nr_rodzaju_biletu')} == 3 ? none : tag" th:utext="${bilet.getField('nr_rodzaju_biletu')} == 3 ? '<b>110.00</b>'"></span>
+                                <span style="font-size: 40pt; color: white" th:remove="${bilet.getField('nr_rodzaju_biletu')} == 4 ? none : tag" th:utext="${bilet.getField('nr_rodzaju_biletu')} == 4 ? '<b>2.40</b>'"></span>
+                                <span style="font-size: 40pt; color: white" th:remove="${bilet.getField('nr_rodzaju_biletu')} == 5 ? none : tag" th:utext="${bilet.getField('nr_rodzaju_biletu')} == 5 ? '<b>7.30</b>'"></span>
+                                <span style="font-size: 40pt; color: white" th:remove="${bilet.getField('nr_rodzaju_biletu')} == 6 ? none : tag" th:utext="${bilet.getField('nr_rodzaju_biletu')} == 6 ? '<b>55.00</b>'"></span>
                         </div>
                         </div>
-                        
-                        <div class="scan-ticket" style="display: flex; justify-content: center; margin-top: 35px">
-                            <form method="POST" th:action="@{/scan}" style="height:20px">
-                                <input type="hidden" name="numer_biletu" value="1">
-                                <button role="button" type="submit" style="width: 50vw">Skasuj bilet</button>
-                            </form>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            <hr style="width: 95%; margin-left: auto; margin-right: auto;">
-            <div class=ticket>
-                <div class="ticket-container" style="display: flex; margin: 10px;">
-                    <div class="qr-code">
-                        <figure style="display: block; margin: auto; width: 256px;">
-                            <img th:src="@{/img/qr2.png}" alt="Kod QR" class="img-fluid">
-                        </figure>
-                    </div>
-                    <div class="ticket-info" style="margin: 15px; width: 100%">
-                        <span style="font-size: 20pt; color: white"><b>RODZAJ: </b>Bilet 24-godzinny</span>
-                        <div class="ticket-extra-info" style="display: flex;justify-content: space-between;">
-                            <div class="ticket-zones" style="display: flex">
-                                <figure style="display: block; padding-left: 10px; margin: auto; width: 64px;">
-                                    <img th:src="@{/img/2.png}" alt="Kod QR" class="img-fluid">
-                                </figure>
-                            </div>
-                            <div class="ticket-price" style="display: flex; content-align: left; text-align:right;">
-                            
-                                <span style="font-size: 40pt; color: white"><b>14.70</b></span>
-                        </div>
-                        </div>
-                        
+
                         <div class="progress-bar" style="text-align: center;">
-                            <span style="font-size: 10pt"><b>Pozostały:</b>2 godziny 12 minut</span>
-                            <progress value="132" max="1440"></progress>
-                            <span style="font-size: 10pt"><b>Data skasowania: </b>29.01.2023 10:00:00</span>
+                            <span style="font-size: 10pt"></span>
+                            <progress></progress>
+                            <span style="font-size: 10pt" th:utext="'<b>Data skasowania: </b>' + ${bilet.getField('data_skasowania')}"></span>
                         </div>
                         
                     </div>
                 </div>
+                <hr style="width: 95%; margin-left: auto; margin-right: auto;">
             </div>
-            <hr style="width: 95%; margin-left: auto; margin-right: auto;">
-            <div class=ticket>
-                <div class="ticket-container" style="display: flex; margin: 10px;">
-                    <div class="qr-code">
-                        <figure style="display: block; margin: auto; width: 256px;">
-                            <img th:src="@{/img/qr3.png}" alt="Kod QR" class="img-fluid">
-                        </figure>
-                    </div>
-                    <div class="ticket-info" style="margin: 15px; width: 100%">
-                        <span style="font-size: 20pt; color: white"><b>RODZAJ: </b>Bilet miesięczny</span>
-                        <div class="ticket-extra-info" style="display: flex;justify-content: space-between;">
-                            <div class="ticket-zones" style="display: flex">
-                                <figure style="display: block; padding-left: 10px; margin: auto; width: 64px;">
-                                    <img th:src="@{/img/1.png}" alt="Kod QR" class="img-fluid">
-                                </figure>
-                                <figure style="display: block; padding-left: 10px; margin: auto; width: 64px;">
-                                    <img th:src="@{/img/2.png}" alt="Kod QR" class="img-fluid">
-                                </figure>
-                            </div>
-                            <div class="ticket-price" style="display: flex; content-align: left; text-align:right;">
-                            
-                                <span style="font-size: 40pt; color: white"><b>55.50</b></span>
-                        </div>
-                        </div>
-                        
-                        <div class="progress-bar" style="text-align: center;">
-                            <span style="font-size: 10pt"><b>Pozostało:</b> 21 dni 3 godziny</span>
-                            <progress value="507" max="720"></progress>
-                            <span style="font-size: 10pt"><b>Data skasowania: </b>21.01.2023 13:00:00</span>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            <hr style="width: 95%; margin-left: auto; margin-right: auto;">
         </div>
     <script type="text/javascript" th:src="@{/js/user.js}"></script>
     <script type="text/javascript" th:src="@{/js/modal.js}"></script>

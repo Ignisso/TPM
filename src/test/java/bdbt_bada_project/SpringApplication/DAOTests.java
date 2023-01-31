@@ -2,18 +2,15 @@ package bdbt_bada_project.SpringApplication;
 
 import bdbt_bada_project.SpringApplication.Database.DAO;
 import bdbt_bada_project.SpringApplication.Database.DatabaseObject;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import javax.xml.crypto.Data;
-
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class DAOTests {
     private class TestObject extends DatabaseObject {
         public TestObject() {
@@ -54,6 +51,9 @@ public class DAOTests {
         assertEquals(5, testobj.getFields().size());
         assertThrows(IndexOutOfBoundsException.class, () -> testobj.getField(5));
         assertThrows(NullPointerException.class, () -> testobj.getField("doesnotexists"));
+        String toStr = "TestObject{[0] test_integer=0, [1] test_float=0.0, " +
+                "[2] test_string=, [3] test_char=?, [4] test_other=null}";
+        assertEquals(toStr, testobj.toString());
     }
 
     @Test
@@ -107,6 +107,47 @@ public class DAOTests {
         testobj.updateField(4, null);
         String sql = "SELECT * FROM test_table WHERE test_other = NULL AND test_char = 'Y'";
         daotest.selectByFieldsNumber(testobj, new Integer[]{3, 4});
+        assertEquals(sql, daotest.getLastSql());
+    }
+
+    @Test
+    void insertTest() {
+        testobj.updateField(0, 1);
+        testobj.updateField(1, 13.37f);
+        testobj.updateField(2, "foo foo");
+        testobj.updateField(3, 'N');
+        testobj.updateField(4, "2017-06-15");
+        daotest.insert(testobj);
+        TestObject result = new TestObject();
+        result.updateField(0, testobj.getField(0));
+        String sql = "INSERT INTO test_table values(1, 13.37, 'foo foo', 'N', '2017-06-15')";
+        assertEquals(sql, daotest.getLastSql());
+        daotest.select(result);
+        assertEquals(testobj.toString(), result.toString());
+    }
+
+    @Test
+    void updateTest() {
+        testobj.updateField(0, 1);
+        testobj.updateField(1, 13.37f);
+        testobj.updateField(2, "foo foo foo");
+        testobj.updateField(3, 'T');
+        testobj.updateField(4, "2017-06-15");
+        daotest.update(testobj);
+        TestObject result = new TestObject();
+        result.updateField(0, testobj.getField(0));
+        String sql = "UPDATE test_table SET test_float = 13.37, test_string = 'foo foo foo', " +
+                "test_char = 'T', test_other = '2017-06-15' WHERE test_integer = 1";
+        assertEquals(sql, daotest.getLastSql());
+        daotest.select(result);
+        assertEquals(testobj.toString(), result.toString());
+    }
+
+    @Test
+    void zdeleteTest() {
+        testobj.updateField(0, 1);
+        daotest.delete(testobj);
+        String sql = "DELETE FROM test_table WHERE test_integer = 1";
         assertEquals(sql, daotest.getLastSql());
     }
 }
