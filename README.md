@@ -1,23 +1,2 @@
-# TODO List
-- [X] Stworzenie bazy kodu z opublikowanych prezentacji
-- [X] Utworzenie repozytorium
-- [X] Opracowanie planu pracy
-- [X] Zaimplementowanie klas mapujących kolumny z bazy danych
-- [ ] Utworzenie analogicznych klas typu CRUD odpowiedzialnych za operację na bazie danyc
-- [ ] Zdefiniowanie niezbędnych plików HTML
-- [ ] Implementacja plików HTML:
-  - [ ] index.html
-  - [ ] another.html
-- [ ] Połączenie bazy danych z aplikacją
-  - [ ] JUnit - `db.isEmpty()`
-- [ ] Operacja `SELECT`
-  - [ ] JUnit `SELECT`
-- [ ] Operacja `INSERT ROW`
-  - [ ] JUnit `INSERT ROW`
-- [ ] Operacja `DELETE`
-  - [ ] JUnit `DELETE`
-- [ ] Operacja `UPDATE`
-  - [ ] JUnit `UPDATE`
-- [ ] Testowanie aplikacji
-- [ ] Eksporotwanie aplikacji
-- [ ] Poprawa User Interface i User Experience
+# TPM - Tramwajowe Przedsiębiorstwo Miejskie
+Strona WWW, współdziałająca z bazą danych Oracle.
